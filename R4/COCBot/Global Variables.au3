@@ -328,7 +328,7 @@ Global $device = @ScriptDir & "\images\device.bmp"
 
 Global $GoldCount = 0, $ElixirCount = 0, $DarkCount = 0, $GemCount = 0, $FreeBuilder = 0
 Global $GoldGained = 0, $ElixirGained = 0, $DarkGained = 0, $TrophyGained = 0
-Global $GoldGainedOld = 0, $ElixirGainedOld = 0, $DarkGainedOld = 0, $TrophyGainedOld = 0
+;Global $GoldGainedOld = 0, $ElixirGainedOld = 0, $DarkGainedOld = 0, $TrophyGainedOld = 0
 Global $GoldCountOld = 0, $ElixirCountOld = 0, $DarkCountOld = 0, $TrophyOld = 0
 Global $WallUpgrade = 0
 Global $resArmy = 0

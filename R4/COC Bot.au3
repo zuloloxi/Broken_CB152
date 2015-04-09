@@ -66,8 +66,10 @@ Func runBot() ;Bot that runs everything in order
 		Pause()
 		If _Sleep(5000) Then Return
 		VillageReport()
+		If ZoomOut() = False Then ContinueLoop
 		Pause()
 		If $SearchCost = 0 And $CommandStop <> 0 And $CommandStop <> 3 Then
+			$FirstAttack = 0  ;force it become first attack when check cost per search
 			If _Sleep(1000) Then Return
 			CheckArmyCamp()
 			If $CurCamp > 0 Then

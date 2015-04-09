@@ -41,12 +41,8 @@ Func VillageReport()
 		$GemCount = GetOther(543, 625, "Gems")
 		SetLog("Resources: [G]: " & $GoldCount & " [E]: " & $ElixirCount & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount, $COLOR_GREEN)
 		If $FirstAttack = 1 Then
-			If $GoldCount >= $GoldCountOld Then
-				$GoldGained += $GoldCount - $GoldCountOld
-			EndIf
-			If $ElixirCount >= $ElixirCountOld Then
-				$ElixirGained += $ElixirCount - $ElixirCountOld
-			EndIf
+			$GoldGained += $GoldCount - $GoldCountOld
+			$ElixirGained += $ElixirCount - $ElixirCountOld
 			$TrophyGained += $TrophyCount - $TrophyCountOld
 		EndIf
 		If $PushBulletEnabled = 1 And $PushBulletvillagereport = 1 Then
@@ -63,12 +59,19 @@ Func VillageReport()
 		$GemCount = GetOther(606, 625, "Gems")
 		SetLog("Resources: [G]: " & $GoldCount & " [E]: " & $ElixirCount & " [D]: " & $DarkCount & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount, $COLOR_GREEN)
 		If $FirstAttack = 1 Then
-			$GoldGained += $GoldCount - $GoldCountOld
-			$ElixirGained += $ElixirCount - $ElixirCountOld
-			$DarkGained += $DarkCount - $DarkCountOld
-			$TrophyGained += $TrophyCount - $TrophyCountOld
+			;$GoldGained += $GoldCount - $GoldCountOld
+			;$ElixirGained += $ElixirCount - $ElixirCountOld
+			;$DarkGained += $DarkCount - $DarkCountOld
+			;$TrophyGained += $TrophyCount - $TrophyCountOld
+			$GoldGained = $GoldCount - GUICtrlRead($lblresultgoldtstart)
+			$ElixirGained = $ElixirCount - GUICtrlRead($lblresultelixirstart)
+			$DarkGained = $DarkCount - GUICtrlRead($lblresultdestart)
+			$TrophyGained = $TrophyCount - GUICtrlRead($lblresulttrophystart)
 			If $PushBulletEnabled = 1 And $PushBulletvillagereport = 1 Then
-				_Push("Village Report", "[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [D]: " & _NumberFormat($DarkCount) & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount & " [Attacked]: " & GUICtrlRead($lblresultvillagesattacked) & " [Skipped]: " & GUICtrlRead($lblresultvillagesskipped) & " [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) & " [Run Time]: " & StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
+				_Push("Village Report", "[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [D]: " & _NumberFormat($DarkCount) & _
+					" [T]: " & $TrophyCount & " [GEM]: " & $GemCount & " [Attacked]: " & GUICtrlRead($lblresultvillagesattacked) & _
+					" [Skipped]: " & GUICtrlRead($lblresultvillagesskipped) & " [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) & _
+					" [Run Time]: " & StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
 				SetLog("Push: Village Report", $COLOR_GREEN)
 			EndIf
 		EndIf
@@ -90,8 +93,8 @@ Func VillageReport()
 					_PushFile($FileName, "loots", "image/jpeg", "Last Raid", $FileName)
 				EndIf
 				if $PushBulletlastraid = 1 then
-					_Push("Last Raid Report:", "Gain: \n[G]: " & _NumberFormat($GoldGained-$GoldGainedold) & " [E]: " & _NumberFormat($ElixirGained-$ElixirGainedOld) & _
-						" [D]: " & _NumberFormat($DarkGained-$DarkGainedOld) & " [T]: " & ($TrophyGained-$TrophyGainedOld) & _
+					_Push("Last Raid Report:", "Gain: \n[G]: " & _NumberFormat($GoldCount-$GoldCountold) & " [E]: " & _NumberFormat($ElixirCount-$ElixirCountOld) & _
+						" [D]: " & _NumberFormat($DarkCount-$DarkCountOld) & " [T]: " & ($TrophyCount-$TrophyCountOld) & _
 						"\nLoot: \n[G]: " & _NumberFormat($LastRaidGold) & " [E]: " & _NumberFormat($LastRaidElixir) & _
 						" [D]: " & _NumberFormat($LastRaidDarkElixir) & " [T]: " & $LastRaidTrophy & _
 						"\nVillage Report: \n[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & _
@@ -100,10 +103,10 @@ Func VillageReport()
 						" [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) )
 					SetLog("Push: Last raid Report",$COLOR_GREEN)
 				EndIf
-				$GoldGainedold = $GoldGained
-				$ElixirGainedOld = $ElixirGained
-				$DarkGainedOld = $DarkGained
-				$TrophyGainedOld = $TrophyGained
+				;$GoldGainedold = $GoldGained
+				;$ElixirGainedOld = $ElixirGained
+				;$DarkGainedOld = $DarkGained
+				;$TrophyGainedOld = $TrophyGained
 				$Raid = 0
 			EndIf
 		EndIf
