@@ -156,6 +156,7 @@ Func readConfig() ;Reads config and sets it to the variables
 		$QueenPos[0] = IniRead($config, "misc", "xQueen", "0")
 		$QueenPos[1] = IniRead($config, "misc", "yQueen", "0")
 		$WideEdge = IniRead($config, "misc", "WideEdge", "0")
+		$ichkAvoidEdge = IniRead($config, "misc", "AvoidEdge", "0")
 
 		;Push Bullet--------------------------------------------------------------------------
 		$PushBulletEnabled = IniRead($config, "notification", "pushbullet", "0")
