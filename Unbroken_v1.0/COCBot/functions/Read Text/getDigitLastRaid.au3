@@ -8,10 +8,6 @@ Func getDigitLastRaid(ByRef $x, $y, $type)
 
 Local $Resource = ""
 
-;if _GetPixelColor(463, 405) Then
-
-;EndIf
-
 While $x <> 440
 	$x += 1
 

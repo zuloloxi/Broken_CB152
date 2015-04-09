@@ -1,14 +1,13 @@
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=n
 #pragma compile(Icon, "Icons\cocbot.ico")
-#pragma compile(FileDescription, Clash of Clans Bot - A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
+#pragma compile(FileDescription, Clash of Clans Bot - Modification of A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
 #pragma compile(ProductName, Clash of Clans Bot)
-#pragma compile(ProductVersion, 5.8)
-#pragma compile(FileVersion, 5.8)
-#pragma compile(LegalCopyright, © The Bytecode Club)
+#pragma compile(ProductVersion, 1.0)
+#pragma compile(FileVersion, 1.0)
 
-$sBotVersion = "5.8 Ultimate Release 1 + Zap + Snipe"
-$sBotTitle = "AutoIt ClashBot v" & $sBotVersion
+$sBotVersion = "1.0"
+$sBotTitle = "AutoIt Unbroken ClashBot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, "", "Bot is already running.")
@@ -67,8 +66,10 @@ Func runBot() ;Bot that runs everything in order
 		Pause()
 		If _Sleep(5000) Then Return
 		VillageReport()
+		If ZoomOut() = False Then ContinueLoop
 		Pause()
 		If $SearchCost = 0 And $CommandStop <> 0 And $CommandStop <> 3 Then
+			$FirstAttack = 0  ;force it become first attack when check cost per search
 			If _Sleep(1000) Then Return
 			CheckArmyCamp()
 			If $CurCamp > 0 Then
@@ -102,6 +103,10 @@ Func runBot() ;Bot that runs everything in order
 		If _Sleep(1000) Then Return
 		If $CommandStop <> 0 And $CommandStop <> 3 Then
 			CheckArmyCamp()
+			If _Sleep(1000) Then Return
+			If $ichkMakeSpells = 1 Then
+				CheckSpellFactory()
+			EndIf
 			If _Sleep(1000) Then Return
 		EndIf
 		Pause()
@@ -142,10 +147,6 @@ Func runBot() ;Bot that runs everything in order
 				checkMainScreen(False)
 				$needzoomout = False
 				If ZoomOut() = False Then ContinueLoop
-			EndIf
-			If _Sleep(1000) Then Return
-			If $ichkMakeSpells = 1 Then
-				CheckSpellFactory()
 			EndIf
 			If _Sleep(1000) Then Return
 		EndIf
@@ -221,7 +222,7 @@ EndFunc   ;==>runBot
 
 Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
-	While ($fullArmy = False) And (Not ($fullSpellFactory = True And $ichkNukeOnly = 1))
+	While ($fullArmy = False) And (Not ( ($fullSpellFactory = True And $ichkNukeOnly = 1) AND $ichkNukeOnlyWithFullArmy <> 1))
 		If $CommandStop = -1 Then SetLog("~~~Waiting for full army~~~", $COLOR_PURPLE)
 		Pause()
 		Local $hTimer = TimerInit(), $x = 30000

@@ -16,9 +16,12 @@ Func GetResources() ;Reads resources
 					$x += 1
 				Else
 					SetLog("Cannot locate Next button, Restarting Bot", $COLOR_RED)
-					_Push("Disconnected", "Your bot got disconnected while searching for enemy..")
+					If $PushBulletEnabled = 1 Then
+						_Push("Disconnected", "Your bot got disconnected while searching for enemy..")
+					EndIf
 					checkMainScreen()
 					$Restart = True
+					$DCattack = 1
 					ExitLoop (2)
 				EndIf
 				$i = 0

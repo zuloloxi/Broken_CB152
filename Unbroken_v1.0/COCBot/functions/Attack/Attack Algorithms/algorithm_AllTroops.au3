@@ -28,9 +28,171 @@ Func OldDropTroop($troup, $position, $nbperspot)
 	Next
 EndFunc   ;==>OldDropTroop
 
+Func SeekEdges()
+	; Clear edge data
+	SetLog("Analyzing base...", $COLOR_BLUE)
+	For $j = 0 To 42
+		For $i = 0 To 42
+			$Grid[$j][$i][2] = 0
+		Next
+	Next
+
+	$BitmapData = _GDIPlus_BitmapLockBits($hAttackBitmap, 0, 0, _GDIPlus_ImageGetWidth($hAttackBitmap), _GDIPlus_ImageGetHeight($hAttackBitmap), $GDIP_ILMREAD, $GDIP_PXF32RGB)
+	$Stride = DllStructGetData($BitmapData, "Stride")
+	$Scan0 = DllStructGetData($BitmapData, "Scan0")
+	For $i = 0 To 41
+		For $j = 0 To 41
+			$YesEdge = False
+			$m = ($Grid[$i][$j + 1][1] - $Grid[$i][$j][1]) / ($Grid[$i][$j + 1][0] - $Grid[$i][$j][0])
+			For $x = $Grid[$i][$j][0] To $Grid[$i][$j + 1][0]
+				$y = Round($m * ($x - $Grid[$i][$j][0]) + $Grid[$i][$j][1])
+				$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + $x * 4)
+				If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				If $EdgeLevel > 1 Then
+					$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x - 1) * 4)
+					If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+					If $EdgeLevel > 2 Then
+						$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x + 1) * 4)
+						If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+					EndIf
+				EndIf
+			Next
+			If $YesEdge Then
+				$Grid[$i][$j][2] = 1
+				$Grid[$i][$j+1][2] = 1
+			EndIf
+			$YesEdge = False
+			$m = ($Grid[$i + 1][$j][1] - $Grid[$i][$j][1]) / ($Grid[$i + 1][$j][0] - $Grid[$i][$j][0])
+			For $x = $Grid[$i][$j][0] To $Grid[$i + 1][$j][0]
+				$y = Round($m * ($x - $Grid[$i][$j][0]) + $Grid[$i][$j][1])
+				$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + $x * 4)
+				If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				If $EdgeLevel > 1 Then
+					$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x - 1) * 4)
+					If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+					If $EdgeLevel > 2 Then
+						$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x + 1) * 4)
+						If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+					EndIf
+				EndIf
+			Next
+			If $YesEdge Then
+				$Grid[$i][$j][2] = 1
+				$Grid[$i+1][$j][2] = 1
+			EndIf
+		Next
+	Next
+	$i = 42
+	For $j = 0 To 41
+		$YesEdge = False
+		$m = ($Grid[$i][$j + 1][1] - $Grid[$i][$j][1]) / ($Grid[$i][$j + 1][0] - $Grid[$i][$j][0])
+		For $x = $Grid[$i][$j][0] To $Grid[$i][$j + 1][0]
+			$y = Round($m * ($x - $Grid[$i][$j][0]) + $Grid[$i][$j][1])
+			$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + $x * 4)
+			If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+			If $EdgeLevel > 1 Then
+				$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x - 1) * 4)
+				If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				If $EdgeLevel > 2 Then
+					$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x + 1) * 4)
+					If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				EndIf
+			EndIf
+		Next
+		If $YesEdge Then
+			$Grid[$i][$j][2] = 1
+			$Grid[$i][$j+1][2] = 1
+		EndIf
+	Next
+	$j = 42
+	For $i = 0 To 41
+		$YesEdge = False
+		$m = ($Grid[$i + 1][$j][1] - $Grid[$i][$j][1]) / ($Grid[$i + 1][$j][0] - $Grid[$i][$j][0])
+		For $x = $Grid[$i][$j][0] To $Grid[$i + 1][$j][0]
+			$y = Round($m * ($x - $Grid[$i][$j][0]) + $Grid[$i][$j][1])
+			$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + $x * 4)
+			If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+			If $EdgeLevel > 1 Then
+				$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x - 1) * 4)
+				If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				If $EdgeLevel > 2 Then
+					$pixel = DllStructCreate("dword", $Scan0 + $y * $Stride + ($x + 1) * 4)
+					If CompareColor(BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF0000), 16), BitShift(BitAND(DllStructGetData($pixel, 1), 0xFF00), 8), BitAND(DllStructGetData($pixel, 1), 0xFF)) Then $YesEdge = True
+				EndIf
+			EndIf
+		Next
+		If $YesEdge Then
+			$Grid[$i][$j][2] = 1
+			$Grid[$i+1][$j][2] = 1
+		EndIf
+	Next
+	_GDIPlus_BitmapUnlockBits($hAttackBitmap, $BitmapData)
+
+	; Clean it up
+	$j = 0
+	For $i = 1 to 41
+		$Neighbors = 0
+		If $Grid[$i-1][$j][2]=1 Then $Neighbors +=1
+		If $Grid[$i+1][$j][2]=1 Then $Neighbors +=1
+		If $Grid[$i][$j+1][2]=1 Then $Neighbors +=1
+		If $Neighbors < 2 Then $Grid[$i][$j][2]=0
+	Next
+	$i = 0
+	For $j = 1 to 41
+		$Neighbors = 0
+		If $Grid[$i][$j-1][2]=1 Then $Neighbors +=1
+		If $Grid[$i][$j+1][2]=1 Then $Neighbors +=1
+		If $Grid[$i+1][$j][2]=1 Then $Neighbors +=1
+		If $Neighbors < 2 Then $Grid[$i][$j][2]=0
+	Next
+	For $i =1 to 41
+		For $j = 1 to 41
+			If $Grid[$i][$j][2]=0 and $Grid[$i+1][$j][2]=1 and $Grid[$i][$j+1][2]=1 and $Grid[$i+1][$j+1][2]=1 Then $Grid[$i][$j][2]=2
+			If $Grid[$i][$j][2]=0 and $Grid[$i][$j-1][2]=1 and $Grid[$i+1][$j-1][2]=1 and $Grid[$i+1][$j][2]=1 Then $Grid[$i][$j][2]=2
+			If $Grid[$i][$j][2]=0 and $Grid[$i-1][$j][2]=1 and $Grid[$i][$j-1][2]=1 and $Grid[$i-1][$j-1][2]=1 Then $Grid[$i][$j][2]=2
+			If $Grid[$i][$j][2]=0 and $Grid[$i-1][$j][2]=1 and $Grid[$i][$j+1][2]=1 and $Grid[$i-1][$j+1][2]=1 Then $Grid[$i][$j][2]=2
+			$Neighbors = 0
+			If $Grid[$i][$j-1][2]=1 Then $Neighbors +=1
+			If $Grid[$i][$j+1][2]=1 Then $Neighbors +=1
+			If $Grid[$i-1][$j][2]=1 Then $Neighbors +=1
+			If $Grid[$i+1][$j][2]=1 Then $Neighbors +=1
+			If $Neighbors < 2 Then $Grid[$i][$j][2]=0
+		Next
+	Next
+	$j = 42
+	For $i = 1 to 41
+		$Neighbors = 0
+		If $Grid[$i-1][$j][2]=1 Then $Neighbors +=1
+		If $Grid[$i+1][$j][2]=1 Then $Neighbors +=1
+		If $Grid[$i][$j-1][2]=1 Then $Neighbors +=1
+		If $Neighbors = 1 Then $Grid[$i][$j][2]=0
+	Next
+	$i = 42
+	For $j = 1 to 41
+		$Neighbors = 0
+		If $Grid[$i][$j-1][2]=1 Then $Neighbors +=1
+		If $Grid[$i][$j+1][2]=1 Then $Neighbors +=1
+		If $Grid[$i-1][$j][2]=1 Then $Neighbors +=1
+		If $Neighbors = 1 Then $Grid[$i][$j][2]=0
+	Next
+	SetLog("Done!", $COLOR_BLUE)
+EndFunc
+
+Func CompareColor($cRed, $cGreen, $cBlue, $tol = 7)
+	For $w = 0 To $numEdges - 1
+		If Abs($cRed - $EdgeColors[$w][0]) < $tol Then
+			If Abs($cGreen - $EdgeColors[$w][1]) < $tol Then
+				If Abs($cBlue - $EdgeColors[$w][2]) < $tol Then
+					Return True
+				EndIf
+			EndIf
+		EndIf
+	Next
+	Return False
+EndFunc   ;==>CompareColor
 
 ; improved function, that avoids to only drop on 5 discret drop points :
-Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
+Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1, $Center = 1)
 	Switch $troop
 		Case $eBarbarian
 			$Pen = $pBarbarian
@@ -49,24 +211,21 @@ Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
 	If _Sleep(300) Then Return
 	If $slotsPerEdge = 0 Or $number < $slotsPerEdge Then $slotsPerEdge = $number
 	If $number = 1 Or $slotsPerEdge = 1 Then ; Drop on a single point per edge => on the middle
-		Click($edge[2][0], $edge[2][1], $number)
-		If $edge2 <> -1 Then Click($edge2[2][0], $edge2[2][1], $number)
+		Click($edge[2][0], $edge[2][1], $number, 0, $Center)
+		If $edge2 <> -1 Then Click($edge2[2][0], $edge2[2][1], $number, 0, $Center)
 		If _Sleep(50) Then Return
 	ElseIf $slotsPerEdge = 2 Then ; Drop on 2 points per edge
 		Local $half = Ceiling($number / 2)
-		Click($edge[1][0], $edge[1][1], $half)
+		Click($edge[1][0], $edge[1][1], $half, 0, $Center)
 		If $edge2 <> -1 Then
 			If _Sleep(SetSleep(0)) Then Return
-			Click($edge2[1][0], $edge2[1][1], $half)
-			_GDIPlus_GraphicsDrawEllipse($Buffer, $edge2[1][0] - 2, $edge2[1][1] - 2, 4, 4, $Pen)
+			Click($edge2[1][0], $edge2[1][1], $half, 0, $Center)
 		EndIf
 		If _Sleep(SetSleep(0)) Then Return
-		Click($edge[3][0], $edge[3][1], $number - $half)
-		_GDIPlus_GraphicsDrawEllipse($Buffer, $edge[3][0] - 2, $edge[3][1] - 2, 4, 4, $Pen)
+		Click($edge[3][0], $edge[3][1], $number - $half, 0, $Center)
 		If $edge2 <> -1 Then
 			If _Sleep(SetSleep(0)) Then Return
-			Click($edge2[3][0], $edge2[3][1], $number - $half)
-			_GDIPlus_GraphicsDrawEllipse($Buffer, $edge2[3][0] - 2, $edge2[3][1] - 2, 4, 4, $Pen)
+			Click($edge2[3][0], $edge2[3][1], $number - $half, 0, $Center)
 		EndIf
 		If _Sleep(SetSleep(0)) Then Return
 	Else
@@ -88,8 +247,7 @@ Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
 			; Randomize the drop points a bit more
 			$posX = Round(_Random_Gaussian($posX, 1.5))
 			$posY = Round(_Random_Gaussian($posY, 1.5))
-			Click($posX, $posY, $nbtroopPerSlot)
-			_GDIPlus_GraphicsDrawEllipse($Buffer, $posX - 2, $posY - 2, 4, 4, $Pen)
+			Click($posX, $posY, $nbtroopPerSlot, 0, $Center)
 			If $edge2 <> -1 Then ; for 2, 3 and 4 sides attack use 2x dropping
 				Local $posX2 = $maxX2 - (($maxX2 - $minX2) * $i) / ($slotsPerEdge - 1)
 				Local $posY2 = $maxY2 - (($maxY2 - $minY2) * $i) / ($slotsPerEdge - 1)
@@ -99,8 +257,7 @@ Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1)
 				If $x = 0 Then
 					If _Sleep(SetSleep(0)) Then Return ; add delay for first wave attack to prevent skip dropping troops, must add for 4 sides attack
 				EndIf
-				Click($posX2, $posY2, $nbtroopPerSlot)
-				_GDIPlus_GraphicsDrawEllipse($Buffer, $posX2 - 2, $posY2 - 2, 4, 4, $Pen)
+				Click($posX2, $posY2, $nbtroopPerSlot, 0, $Center)
 				$nbTroopsLeft -= $nbtroopPerSlot
 			Else
 				$nbTroopsLeft -= $nbtroopPerSlot
@@ -234,11 +391,11 @@ Func DropOnEdges($troop, $nbSides, $number, $slotsPerEdge = 0, $miniEdge = False
 			$edgeB[3][1] = Round(($edgeB[2][1] + $edgeB[4][1]) / 2)
 		EndIf
 		If $nbSides = 1 Then
-			DropOnEdge($troop, $edgeA, $nbTroopsLeft, $slotsPerEdge)
+			DropOnEdge($troop, $edgeA, $nbTroopsLeft, $slotsPerEdge, -1, -1, $AimTH)
 			$nbTroopsLeft = 0
 		Else
 			$nbTroopsPerEdge = Round($nbTroopsLeft / 2)
-			DropOnEdge($troop, $edgeA, $nbTroopsPerEdge, $slotsPerEdge, $edgeB)
+			DropOnEdge($troop, $edgeA, $nbTroopsPerEdge, $slotsPerEdge, $edgeB, -1, $AimTH)
 		EndIf
 	EndIf
 EndFunc   ;==>DropOnEdges
@@ -286,6 +443,8 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	$pKing = _GDIPlus_PenCreate(0xFFA03C40, 1)
 	$pQueen = _GDIPlus_PenCreate(0xFF9D58E9, 1)
 	$pCC = _GDIPlus_PenCreate(0xFFFEF8F7, 1)
+
+	If $ichkAvoidEdge=1 Then SeekEdges()
 
 	If $NukeAttack Then
 		SetLog("~Nuking the dark elixir storage", $COLOR_BLUE)
