@@ -56,4 +56,3 @@ Func checkDarkElix()
 		Return False ; return 0
 	EndIf
 EndFunc   ;==>checkDarkElix
-
