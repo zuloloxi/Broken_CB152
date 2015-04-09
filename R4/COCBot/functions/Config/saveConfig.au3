@@ -357,6 +357,12 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "general", "MinTrophy", GUICtrlRead($txtMinimumTrophy))
 	IniWrite($config, "general", "MaxTrophy", GUICtrlRead($txtMaxTrophy))
 	;Misc Settings--------------------------------------------------------------------------
+	If GUICtrlRead($chkAvoidEdge) = $GUI_CHECKED Then
+		IniWrite($config, "misc", "AvoidEdge", 1)
+	Else
+		IniWrite($config, "misc", "AvoidEdge", 0)
+	EndIf
+
 	If GUICtrlRead($chkTakeAttackSS) = $GUI_CHECKED Then
 		IniWrite($config, "misc", "TakeAttackSnapShot", 1)
 	Else
