@@ -82,4 +82,5 @@
 #include "functions\Village\UpgradeBuilding.au3"
 #include "functions\Village\VillageReport.au3"
 #include "functions\Village\CheckCostPerSearch.au3"
+
 #include "functions\Notification\PushBullet.au3"
