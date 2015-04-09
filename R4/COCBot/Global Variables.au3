@@ -1,3 +1,5 @@
+
+
 #include <ButtonConstants.au3>
 #include <ComboConstants.au3>
 #include <EditConstants.au3>
@@ -33,6 +35,7 @@ EndIf
 Global $hBitmap; Image for pixel functions
 Global $hHBitmap; Handle Image for pixel functions
 Global $hAttackBitmap
+Global $Pen
 
 Global $Title = "BlueStacks App Player" ; Name of the Window
 Global $HWnD = WinGetHandle($Title) ;Handle for Bluestacks window
@@ -102,6 +105,53 @@ Global $FurthestBottomLeft[5][2] = [[28, 314], [0, 0], [0, 0], [0, 0], [440, 612
 Global $FurthestBottomRight[5][2] = [[440, 612], [0, 0], [0, 0], [0, 0], [820, 313]]
 Global $Edges[4] = [$BottomRight, $TopLeft, $BottomLeft, $TopRight]
 
+;Red border finding
+Global $numEdges = 81
+Global $EdgeColors[81][3] = [[218, 116, 44], [207, 97, 37], [199, 104, 41], [201, 119, 45], [193, 130, 47], _
+		[203, 134, 55], [208, 138, 55], [211, 143, 59], [196, 128, 50], [195, 159, 38], [199, 143, 57], _
+		[173, 124, 50], [214, 108, 40], [193, 101, 38], [211, 111, 44], [203, 112, 42], [123, 73, 26], _
+		[143, 89, 31], [157, 100, 41], [180, 116, 45], [133, 82, 32], [125, 65, 20], [172, 117, 48], _
+		[120, 92, 36], [106, 76, 30], [159, 105, 42], [172, 103, 40], [193, 124, 44], [189, 119, 46], _
+		[206, 155, 64], [190, 137, 46], [187, 138, 56], [192, 155, 58], [203, 131, 47], [196, 147, 52], _
+		[199, 140, 53], [193, 135, 52], [195, 159, 58], [196, 128, 50], [193, 136, 53], [211, 143, 59], _
+		[203, 131, 47], [215, 142, 50], [205, 145, 53], [187, 129, 53], [151, 85, 34], [154, 75, 26], _
+		[168, 80, 32], [105, 68, 20], [172, 117, 46], [193, 119, 47], [192, 111, 45], [126, 88, 34], _
+		[165, 88, 29], [158, 71, 25], [166, 91, 34], [127, 59, 23], [212, 119, 47], [206, 119, 42], _
+		[211, 119, 45], [200, 112, 41], [202, 108, 40], [180, 113, 39], [211, 119, 45], [202, 127, 49], _
+		[168, 126, 46], [126, 50, 16], [165, 81, 27], [163, 74, 26], [207, 129, 53], [183, 129, 44], _
+		[196, 139, 52], [180, 126, 48], [156, 81, 31], [142, 77, 28], [160, 104, 37], _
+		[157, 83, 29], [128, 71, 25], [157, 80, 37], [158, 93, 33], [198, 115, 43]]
+Global $Grid[43][43][3]
+$Grid[0][0][0] = 35
+$Grid[0][0][1] = 314
+$Grid[42][0][0] = 429
+$Grid[42][0][1] = 610
+$Grid[0][42][0] = 429
+$Grid[0][42][1] = 18
+$Grid[42][42][0] = 824
+$Grid[42][42][1] = 314
+For $i = 1 To 41
+	$Grid[$i][0][0] = ($Grid[$i - 1][0][0] + (($Grid[42][0][0] - $Grid[0][0][0]) / 42))
+	$Grid[$i][0][1] = ($Grid[$i - 1][0][1] + (($Grid[42][0][1] - $Grid[0][0][1]) / 42))
+	$Grid[$i][42][0] = ($Grid[$i - 1][42][0] + (($Grid[42][42][0] - $Grid[0][42][0]) / 42))
+	$Grid[$i][42][1] = ($Grid[$i - 1][42][1] + (($Grid[42][42][1] - $Grid[0][42][1]) / 42))
+Next
+For $i = 0 To 42
+	For $j = 1 To 41
+		$Grid[$i][$j][0] = ($Grid[$i][0][0] + $j * (($Grid[$i][42][0] - $Grid[$i][0][0]) / 42))
+		$Grid[$i][$j][1] = ($Grid[$i][0][1] + $j * (($Grid[$i][42][1] - $Grid[$i][0][1]) / 42))
+	Next
+Next
+For $j = 0 To 42
+	For $i = 0 To 42
+		$Grid[$j][$i][0] = Round($Grid[$j][$i][0])
+		$Grid[$j][$i][1] = Round($Grid[$j][$i][1])
+	Next
+Next
+$EdgeLevel = 1
+$AimCenter = 1
+$AimTH = 2
+
 Global $atkTroops[9][2] ;9 Slots of troops -  Name, Amount
 Global $fullArmy ;Check for full army or not
 Global $fullSpellFactory ;Check for full spell factory or not
@@ -145,6 +195,7 @@ Global $ichkTrap
 Global $itxtKingSkill ;Delay before activating King Skill
 Global $itxtQueenSkill ;Delay before activating Queen Skill
 Global $WideEdge, $chkWideEdge
+Global $ichkAvoidEdge, $chkAvoidEdge
 
 ;Boosts Settings
 Global $BoostAll
@@ -322,3 +373,93 @@ Global $LastRaidGold = 0
 Global $LastRaidElixir = 0
 Global $LastRaidDarkElixir = 0
 Global $LastRaidTrophy = 0
+
+ScriptDir\COCBot\Functions.au3
+
+#include "functions\Attack\dropCC.au3"
+#include "functions\Attack\dropHeroes.au3"
+#include "functions\Attack\GoldElixirChange.au3"
+#include "functions\Attack\PrepareAttack.au3"
+#include "functions\Attack\ReturnHome.au3"
+#include "functions\Attack\NameOfTroop.au3"
+#include "functions\Attack\Attack Algorithms\algorithmTH.au3"
+#include "functions\Attack\Attack Algorithms\algorithm_AllTroops.au3"
+#include "functions\Attack\Attack Algorithms\algorithm_Barch.au3"
+
+#include "functions\Config\applyConfig.au3"
+#include "functions\Config\readConfig.au3"
+#include "functions\Config\saveConfig.au3"
+#include "functions\Config\ScreenCoordinates.au3"
+
+#include "functions\Image Search\ImageSearch.au3"
+#include "functions\Image Search\checkDeadBase.au3"
+#include "functions\Image Search\checkTownhall.au3"
+#include "functions\Image Search\checkDarkElix.au3"
+#include "functions\Image Search\checkWall.au3"
+
+#include "functions\Main Screen\checkMainScreen.au3"
+#include "functions\Main Screen\checkObstacles.au3"
+#include "functions\Main Screen\waitMainScreen.au3"
+#include "functions\Main Screen\ZoomOut.au3"
+
+#include "functions\Other\_Sleep.au3"
+#include "functions\Other\Click.au3"
+#include "functions\Other\CreateLogFile.au3"
+#include "functions\Other\FindPos.au3"
+#include "functions\Other\getBSPos.au3"
+#include "functions\Other\SetLog.au3"
+#include "functions\Other\WriteStats.au3"
+#include "functions\Other\Tab.au3"
+#include "functions\Other\Time.au3"
+#include "functions\Other\BlockInputEx.au3"
+#include "functions\Other\_NumberFormat.au3"
+#include "functions\Other\RandomGaussian.au3"
+#include "functions\Other\stuckHandler.au3"
+
+#include "functions\Pixels\_CaptureRegion.au3"
+#include "functions\Pixels\_ColorCheck.au3"
+#include "functions\Pixels\_GetPixelColor.au3"
+#include "functions\Pixels\_PixelSearch.au3"
+#include "functions\Pixels\_MultiPixelSearch.au3"
+#include "functions\Pixels\boolPixelSearch.au3"
+
+#include "functions\Read Text\getChar.au3"
+#include "functions\Read Text\getDarkElixir.au3"
+#include "functions\Read Text\getDigit.au3"
+#include "functions\Read Text\getDigitLarge.au3"
+#include "functions\Read Text\getDigitSmall.au3"
+#include "functions\Read Text\getElixir.au3"
+#include "functions\Read Text\getGold.au3"
+#include "functions\Read Text\getNormal.au3"
+#include "functions\Read Text\getOther.au3"
+#include "functions\Read Text\getTrophy.au3"
+#include "functions\Read Text\getString.au3"
+#include "functions\Read Text\getDigitLastRaid.au3"
+
+#include "functions\Search\checkNextButton.au3"
+#include "functions\Search\CompareResources.au3"
+#include "functions\Search\GetResources.au3"
+#include "functions\Search\PrepareSearch.au3"
+#include "functions\Search\VillageSearch.au3"
+
+#include "functions\Village\BoostAllBuilding.au3"
+#include "functions\Village\CheckFullArmy.au3"
+#include "functions\Village\CheckArmyCamp.au3"
+#include "functions\Village\CheckSpellFactory.au3"
+#include "functions\Village\Collect.au3"
+#include "functions\Village\DonateCC.au3"
+#include "functions\Village\DropTrophy.au3"
+#include "functions\Village\isGoldFull.au3"
+#include "functions\Village\isElixirFull.au3"
+#include "functions\Village\LocateBuildings.au3"
+#include "functions\Village\ReArm.au3"
+#include "functions\Village\RequestCC.au3"
+#include "functions\Village\Train.au3"
+#include "functions\Village\BotCommand.au3"
+#include "functions\Village\UpgradeWall.au3"
+#include "functions\Village\UpgradeBuilding.au3"
+#include "functions\Village\VillageReport.au3"
+#include "functions\Village\CheckCostPerSearch.au3"
+
+#include "functions\Notification\PushBullet.au3"
+
