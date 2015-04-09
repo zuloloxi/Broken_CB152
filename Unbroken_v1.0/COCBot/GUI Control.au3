@@ -41,6 +41,8 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					chkNukeAttacking()
 				Case $chkNukeOnly
 					chkNukeOnly()
+				Case $chkNukeOnlyWithFullArmy
+					chkNukeOnlyWithFullArmy()
 				Case $cmbSpellCreate
 					cmbSpellCreate()
 				Case $tabMain
@@ -772,6 +774,7 @@ Func chkMakeSpells()
 		GUICtrlSetState($txtSpellNumber, $GUI_ENABLE)
 		GUICtrlSetState($chkNukeAttacking, $GUI_ENABLE)
 		GUICtrlSetState($chkNukeOnly, $GUI_ENABLE)
+		GUICtrlSetState($chkNukeOnlyWithFullArmy, $GUI_ENABLE)
 	Else
 		$ichkMakeSpells = 0
 		GUICtrlSetState($cmbSpellCreate, $GUI_DISABLE)
@@ -779,6 +782,7 @@ Func chkMakeSpells()
 		GUICtrlSetState($txtSpellNumber, $GUI_DISABLE)
 		GUICtrlSetState($chkNukeAttacking, $GUI_DISABLE)
 		GUICtrlSetState($chkNukeOnly, $GUI_DISABLE)
+		GUICtrlSetState($chkNukeOnlyWithFullArmy, $GUI_DISABLE)
 	EndIf
 EndFunc   ;==>chkMakeSpells
 
@@ -800,17 +804,27 @@ Func chkNukeOnly()
 	EndIf
 EndFunc   ;==>chkNukeOnly
 
+Func chkNukeOnlyWithFullArmy()
+	If GUICtrlRead($chkNukeOnlyWithFullArmy) = $GUI_CHECKED Then
+		$ichkNukeOnlyWithFullArmy = 1
+	Else
+		$ichkNukeOnlyWithFullArmy = 0
+	EndIf
+EndFunc   ;==>chkNukeOnlyWithFullArmy
+
 Func cmbSpellCreate()
 	If _GUICtrlComboBox_GetCurSel($cmbSpellCreate) <> 0 Then
 		GUICtrlSetState($txtDENukeLimit, $GUI_DISABLE)
 		GUICtrlSetState($txtSpellNumber, $GUI_DISABLE)
 		GUICtrlSetState($chkNukeAttacking, $GUI_DISABLE + $GUI_UNCHECKED)
 		GUICtrlSetState($chkNukeOnly, $GUI_DISABLE + $GUI_UNCHECKED)
+		GUICtrlSetState($chkNukeOnlyWithFullArmy, $GUI_DISABLE + $GUI_UNCHECKED)
 	Else
 		GUICtrlSetState($txtDENukeLimit, $GUI_ENABLE)
 		GUICtrlSetState($txtSpellNumber, $GUI_ENABLE)
 		GUICtrlSetState($chkNukeAttacking, $GUI_ENABLE)
 		GUICtrlSetState($chkNukeOnly, $GUI_ENABLE)
+		GUICtrlSetState($chkNukeOnlyWithFullArmy, $GUI_ENABLE)
 	EndIf
 EndFunc   ;==>cmbSpellCreate
 

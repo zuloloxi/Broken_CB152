@@ -294,12 +294,14 @@ Global $txtSpellNumber
 Global $txtSpellCap
 Global $chkNukeAttacking
 Global $chkNukeOnly
+Global $chkNukeOnlyWithFullArmy
 Global $ichkMakeSpells
 Global $iSpellSelection
 Global $iNukeLimit
 Global $iSpellNumber
 Global $ichkNukeAttacking
 Global $ichkNukeOnly
+Global $ichkNukeOnlyWithFullArmy
 Global $rdoMaybeSkip
 Global $rdoFalsePositive
 Global $DESearchMode

@@ -87,7 +87,7 @@ Func VillageReport()
 			GUICtrlSetData($lblresultdegain, $DarkGained)
 			GUICtrlSetData($lblresulttrophygain, $TrophyGained)
 
-			If $PushBulletEnabled = 1 And $Raid = 1 Then
+			If $PushBulletEnabled = 1 And $Raid = 1 and $DCattack <> 1 Then  ;No report after bot disconnected
 				If $PushBullettype = 1 Then
 					If _Sleep(2000) Then Return
 					_PushFile($FileName, "loots", "image/jpeg", "Last Raid", $FileName)

@@ -104,6 +104,10 @@ Func runBot() ;Bot that runs everything in order
 		If $CommandStop <> 0 And $CommandStop <> 3 Then
 			CheckArmyCamp()
 			If _Sleep(1000) Then Return
+			If $ichkMakeSpells = 1 Then
+				CheckSpellFactory()
+			EndIf
+			If _Sleep(1000) Then Return
 		EndIf
 		Pause()
 		If $DCattack = 1 And $CommandStop <> 0 And $CommandStop <> 3 And $fullArmy Then
@@ -143,10 +147,6 @@ Func runBot() ;Bot that runs everything in order
 				checkMainScreen(False)
 				$needzoomout = False
 				If ZoomOut() = False Then ContinueLoop
-			EndIf
-			If _Sleep(1000) Then Return
-			If $ichkMakeSpells = 1 Then
-				CheckSpellFactory()
 			EndIf
 			If _Sleep(1000) Then Return
 		EndIf
@@ -222,7 +222,7 @@ EndFunc   ;==>runBot
 
 Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
-	While ($fullArmy = False) And (Not ($fullSpellFactory = True And $ichkNukeOnly = 1))
+	While ($fullArmy = False) And (Not ( ($fullSpellFactory = True And $ichkNukeOnly = 1) AND $ichkNukeOnlyWithFullArmy <> 1))
 		If $CommandStop = -1 Then SetLog("~~~Waiting for full army~~~", $COLOR_PURPLE)
 		Pause()
 		Local $hTimer = TimerInit(), $x = 30000
