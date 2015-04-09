@@ -461,33 +461,18 @@ $txtReturnh = GUICtrlCreateInput("10", 130, 141, 31, 21, BitOR($GUI_SS_DEFAULT_I
 GUICtrlSetLimit(-1, 2)
 $lblReturndelay = GUICtrlCreateLabel("seconds after no income detected", 165, 146, 200, 17)
 
-$chkWideEdge = GUICtrlCreateCheckbox("Look deeper for inside town hall", 30, 173, 180, 17)
+$chkWideEdge = GUICtrlCreateCheckbox("Look deeper for inside town hall", 30, 180, 177, 17)
+$chkAvoidEdge = GUICtrlCreateCheckbox("Smart deployment", 208, 180, 120, 17)
 
-#cs
-	$lblReduceresource = GUICtrlCreateLabel("Cast Lightning when :", 30, 173, 100, 17)
-	GUICtrlSetTip(-1, "Set delay timing for return home during raid")
-	$txtReduceresource = GUICtrlCreateInput("10", 130, 168, 31, 21, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
-	GUICtrlSetLimit(-1, 2)
-	$lblResorucereduce = GUICtrlCreateLabel("Dark Elixir", 165, 173, 200, 17)
-
-	$lblOpenCOC = GUICtrlCreateLabel("Reopen COC after:", 30, 200, 100, 17)
-	GUICtrlSetState(-1, $GUI_DISABLE)
-	GUICtrlSetTip(-1, "Reopen COC when Clashbot fail to function correctly")
-	$txtOpenCOC = GUICtrlCreateCombo("", 130, 195, 45, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-	GUICtrlSetData(-1, "30|40|50|60", "30") ; Reopen COC
-	GUICtrlSetState(-1, $GUI_DISABLE)
-	$lblOnCOC = GUICtrlCreateLabel("minutes when COC is in abnormal status", 180, 200, 200, 17)
-	GUICtrlSetState(-1, $GUI_DISABLE)
-#ce
 $chkAlertSearch = GUICtrlCreateCheckbox("Base Found Alert", 30, 205, 100, 17)
-$chkTakeLootSS = GUICtrlCreateCheckbox("Take Loots Snapshot", 131, 205, 118, 17)
+$chkTakeLootSS = GUICtrlCreateCheckbox("Take Loots Image", 131, 205, 118, 17)
 GUICtrlSetState(-1, $GUI_CHECKED)
-$chkTakeTownSS = GUICtrlCreateCheckbox("Take All Towns Snapshot", 253, 205, 141, 17)
-$chkTakeAttackSS = GUICtrlCreateCheckbox("Take Attack Snapshot", 131, 230, 118, 17)
+$chkTakeTownSS = GUICtrlCreateCheckbox("Take All Towns Image", 253, 205, 141, 17)
+$chkTakeAttackSS = GUICtrlCreateCheckbox("Take Attack Image", 131, 230, 118, 17)
 GUICtrlSetTip(-1, "Snapshot of attack and all deployments")
 $chkDebug = GUICtrlCreateCheckbox("Collect debug info", 253, 230, 141, 17)
-; GUICtrlSetState($chkDebug, $GUI_HIDE)
 GUICtrlSetTip(-1, "Allow debug mode to store data")
+If @Compiled Then GUICtrlSetState($chkDebug, $GUI_HIDE)
 
 $LocationSettings = GUICtrlCreateGroup("Locate Buildings", 20, 255, 375, 100)
 $btnLocateKingAltar = GUICtrlCreateButton("King Altar", 32, 270, 83, 25)
@@ -535,18 +520,6 @@ GUICtrlSetData(-1, "Default|Lower|Higher", "Default")
 $btnFindWall = GUICtrlCreateButton("Find Wall", 145, 60, 63, 21)
 GUICtrlSetOnEvent(-1, "btnFindWall")
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-#cs
-	$Upgrade = GUICtrlCreateGroup("Buildings / Walls Upgrade", 20, 165, 375, 120)
-	$lslUpgrade = GUICtrlCreateListView("Pos X|Pos Y", 30, 180, 130, 95)
-	$btnLocatelist = GUICtrlCreateButton("Locate", 175, 245, 60, 30)
-	GUICtrlSetOnEvent(-1, "btnLocatelist")
-	$btnDeletelist = GUICtrlCreateButton("Delete", 245, 245, 60, 30)
-	GUICtrlSetOnEvent(-1, "btnDeletelist")
-	$btnClearlist = GUICtrlCreateButton("Clear", 315, 245, 60, 30)
-	GUICtrlSetOnEvent(-1, "btnClearlist")
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-#ce
 
 $Boosts = GUICtrlCreateGroup("Boosts", 20, 285, 375, 70)
 $lblBoostBarracks = GUICtrlCreateLabel("Barracks Boosts left :", 30, 305, 100, 17)
@@ -657,18 +630,6 @@ $lblresulttrophygain = GUICtrlCreateLabel("0", 318, 313, 60, 17, $SS_RIGHT)
 GUICtrlCreatePic(@ScriptDir & "\images\Resource\Trophy.jpg", 230, 313, 15, 15)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-#cs
-	$TotalLoot = GUICtrlCreateGroup("Total Loot", 210, 190, 185, 140)
-	$lbllootGold = GUICtrlCreateLabel("Gold Gain :",220, 218, 60, 17)
-	$lblresultlootGold = GUICtrlCreateLabel("0", 318, 218, 60, 17, $SS_RIGHT)
-	$lbllootElixir = GUICtrlCreateLabel("Elixir Gain :", 220, 243, 60, 17)
-	$lblresultlootElixir = GUICtrlCreateLabel("0", 318, 243, 60, 17, $SS_RIGHT)
-	$lblDarkElixir = GUICtrlCreateLabel("DE Gain :", 220, 268, 60, 17)
-	$lblresultDarkElixir = GUICtrlCreateLabel("0", 318, 268, 60, 17, $SS_RIGHT)
-	$lbltrophyloot = GUICtrlCreateLabel("Trophies Gain :", 220, 293, 100, 17)
-	$lblresulttrophyloot = GUICtrlCreateLabel("0", 318, 293, 60, 17, $SS_RIGHT)
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
-#ce
 GUICtrlCreateTabItem("")
 
 ;Load/Save Function
