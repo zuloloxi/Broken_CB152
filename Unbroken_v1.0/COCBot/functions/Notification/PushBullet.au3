@@ -170,6 +170,7 @@ Func _PushFile($File, $Folder, $FileType, $title, $body)
 				SetLog('cURL returned error code:')
 				SetLog($Result)
 			EndIf
+		EndIf
 	Else
 		If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
 			SetLog('=========================================================================')
