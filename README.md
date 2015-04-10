@@ -1,4 +1,5 @@
 # Broken_Clashbot
+Modification of v5.8 of bot originally available from http://clashbot.org/forums/index.php?/topic/1010-flawless-clashbot-release-58-recommended/
 
 ## File not included
 curl.exe is not included here to avoid risk of potential virus or malicious file.
