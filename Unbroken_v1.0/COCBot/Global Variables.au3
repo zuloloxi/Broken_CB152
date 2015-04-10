@@ -44,6 +44,8 @@ Global $dirLoots = @ScriptDir & "\Loots\"
 Global $dirAttack = @ScriptDir & "\Attacks\"
 Global $dirDebug = @ScriptDir & "\Debug\"
 Global $dirAllTowns = @ScriptDir & "\AllTowns\"
+Global $dirConfigs = @ScriptDir & "\config\"
+Global $config = @ScriptDir & "\config\default.ini"
 Global $sLogPath ; `Will create a new log file every time the start button is pressed
 Global $hLogFileHandle
 Global $Restart = False
@@ -205,6 +207,9 @@ Global $chkBoostRax1
 Global $chkBoostRax2
 Global $chkBoostRax3
 Global $chkBoostRax4
+Global $chkBoostSpell
+Global $chkBoostDB1
+Global $chkBoostDB2
 
 ;Donate Settings
 Global $CCPos[2] = [-1, -1] ;Position of clan castle
