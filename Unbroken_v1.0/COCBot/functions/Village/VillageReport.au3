@@ -44,10 +44,39 @@ Func VillageReport()
 			$GoldGained += $GoldCount - $GoldCountOld
 			$ElixirGained += $ElixirCount - $ElixirCountOld
 			$TrophyGained += $TrophyCount - $TrophyCountOld
+			If $PushBulletEnabled = 1 And $PushBulletvillagereport = 1 Then
+				_Push("Village Report", "[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount & " [Attacked]: " & GUICtrlRead($lblresultvillagesattacked) & " [Skipped]: " & GUICtrlRead($lblresultvillagesskipped) & " [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) & " [Run Time]: " & StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
+				SetLog("Push: Village Report", $COLOR_GREEN)
+			EndIf
 		EndIf
-		If $PushBulletEnabled = 1 And $PushBulletvillagereport = 1 Then
-			_Push("Village Report", "[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount & " [Attacked]: " & GUICtrlRead($lblresultvillagesattacked) & " [Skipped]: " & GUICtrlRead($lblresultvillagesskipped) & " [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) & " [Run Time]: " & StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
-			SetLog("Push: Village Report", $COLOR_GREEN)
+		Click(820, 40) ; Close Builder/Shop
+		If $FirstAttack = 0 Then
+			GUICtrlSetData($lblresultgoldtstart, $GoldCount)
+			GUICtrlSetData($lblresultelixirstart, $ElixirCount)
+			GUICtrlSetData($lblresulttrophystart, $TrophyCount)
+		Else
+			GUICtrlSetData($lblresultgoldgain, $GoldGained)
+			GUICtrlSetData($lblresultelixirgain, $ElixirGained)
+			GUICtrlSetData($lblresulttrophygain, $TrophyGained)
+
+			If $PushBulletEnabled = 1 And $Raid = 1 and $DCattack <> 1 Then  ;No report after bot disconnected
+				If $PushBullettype = 1 Then
+					If _Sleep(2000) Then Return
+					_PushFile($FileName, "loots", "image/jpeg", "Last Raid", $FileName)
+				EndIf
+				if $PushBulletlastraid = 1 then
+					_Push("Last Raid Report:", "Gain: \n[G]: " & _NumberFormat($GoldCount-$GoldCountold) & " [E]: " & _NumberFormat($ElixirCount-$ElixirCountOld) & _
+						" [T]: " & ($TrophyCount-$TrophyCountOld) & _
+						"\nLoot: \n[G]: " & _NumberFormat($LastRaidGold) & " [E]: " & _NumberFormat($LastRaidElixir) & _
+						" [T]: " & $LastRaidTrophy & _
+						"\nVillage Report: \n[G]: " & _NumberFormat($GoldCount) & " [E]: " & _NumberFormat($ElixirCount) & _
+						" [T]: " & $TrophyCount & " [GEM]: " & $GemCount & _
+						" [Attacked]: " & GUICtrlRead($lblresultvillagesattacked) & " [Skipped]: " & GUICtrlRead($lblresultvillagesskipped) & _
+						" [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) )
+					SetLog("Push: Last raid Report",$COLOR_GREEN)
+				EndIf
+				$Raid = 0
+			EndIf
 		EndIf
 	Else
 		$GoldCountOld = $GoldCount
@@ -59,10 +88,6 @@ Func VillageReport()
 		$GemCount = GetOther(606, 625, "Gems")
 		SetLog("Resources: [G]: " & $GoldCount & " [E]: " & $ElixirCount & " [D]: " & $DarkCount & " [T]: " & $TrophyCount & " [GEM]: " & $GemCount, $COLOR_GREEN)
 		If $FirstAttack = 1 Then
-			;$GoldGained += $GoldCount - $GoldCountOld
-			;$ElixirGained += $ElixirCount - $ElixirCountOld
-			;$DarkGained += $DarkCount - $DarkCountOld
-			;$TrophyGained += $TrophyCount - $TrophyCountOld
 			$GoldGained = $GoldCount - GUICtrlRead($lblresultgoldtstart)
 			$ElixirGained = $ElixirCount - GUICtrlRead($lblresultelixirstart)
 			$DarkGained = $DarkCount - GUICtrlRead($lblresultdestart)
@@ -103,10 +128,6 @@ Func VillageReport()
 						" [Wall Upgrade]: " & GUICtrlRead($lblwallupgradecount) )
 					SetLog("Push: Last raid Report",$COLOR_GREEN)
 				EndIf
-				;$GoldGainedold = $GoldGained
-				;$ElixirGainedOld = $ElixirGained
-				;$DarkGainedOld = $DarkGained
-				;$TrophyGainedOld = $TrophyGained
 				$Raid = 0
 			EndIf
 		EndIf
