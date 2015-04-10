@@ -25,7 +25,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 	Click(512, 394) ;Click Confirm
 	If _Sleep(750) Then Return
 
-    	If _Sleep(2000) Then Return
+	If _Sleep(3000) Then Return
 	_CaptureRegion()
 	$Raid = 1
 	;Get Last Raid Resources
@@ -44,6 +44,7 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 		Local $Date = @MDAY & "." & @MON & "." & @YEAR
 		Local $Time = @HOUR & "." & @MIN
 		$FileName = $Date & "_at_" & $Time & ".jpg"
+		_CaptureRegion()
 		_GDIPlus_ImageSaveToFile($hBitmap, $dirLoots & $FileName)
 	EndIf
 

@@ -598,9 +598,9 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 					$DropX = $FurthestBottomRight[4][0]
 					$DropY = $FurthestBottomRight[4][1]
 			EndSwitch
-			dropCC($DropX, $DropY, $CC)
+			dropCC($DropX, $DropY, $CC, $AimTH)
 			If _Sleep(100) Then Return
-			dropHeroes($DropX, $DropY, $King, $Queen)
+			dropHeroes($DropX, $DropY, $King, $Queen, $AimTH)
 		Else
 			If $nbSides = 1 Then
 				dropCC($BottomRight[3][0], $BottomRight[3][1], $CC)

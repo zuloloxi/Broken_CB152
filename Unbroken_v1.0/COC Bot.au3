@@ -34,6 +34,9 @@ EndIf
 DirCreate($dirLogs)
 DirCreate($dirLoots)
 DirCreate($dirAllTowns)
+DirCreate($dirDebug)
+DirCreate($dirAttack)
+DirCreate($dirConfigs)
 
 $sTimer = TimerInit()
 AdlibRegister("SetTime", 1000)
