@@ -43,22 +43,25 @@ Func UpgradeWall ()
 			If $MinWallGold Then
 				SetLog("Upgrading walls using Gold", $COLOR_BLUE)
 				UpgradeWallGold()
-				If $wallbuild = 0 Then
-					If $walllowlevel = 0 Then
-						SetLog("Upgrade with Gold failed, trying upgrade using Elixir", $COLOR_BLUE)
-						UpgradeWallElix()
-					Else
-						SetLog("Wall level lower than 8, skipping upgrade with Elixir", $COLOR_BLUE)
-					EndIf
+				If $wallbuild = 0  and $walllowlevel = 0 Then
+					SetLog("Upgrade with Gold failed, trying upgrade using Elixir", $COLOR_BLUE)
+					;UpgradeWallElix()
 				EndIf
 			Else
 				SetLog("Gold is lower than Minimum setting, trying upgrade walls using Elixir", $COLOR_RED)
+			EndIf
+
+			;Do upgrade using Elixir
+			If $walllowlevel = 0 then
 				If $MinWallElixir Then
 					UpgradeWallElix()
 				Else
 					Setlog ("Elixir is lower than Minimum setting, skipping ugrade", $COLOR_BLUE)
 				EndIf
+			Else
+				SetLog("Wall level lower than 8, skipping upgrade with Elixir", $COLOR_BLUE)
 			EndIf
+
 	EndSwitch
 EndFunc
 
