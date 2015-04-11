@@ -207,6 +207,12 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "donate", "chkDonateGiants", 0)
 	EndIf
+	
+	If GUICtrlRead($gtfo) = $GUI_CHECKED Then
+        IniWrite($config, "donate", "gtfo", 1)
+        Else
+        IniWrite($config, "donate", "gtfo", 0)
+        EndIf
 
 	IniWrite($config, "donate", "xCCPos", $CCPos[0])
 	IniWrite($config, "donate", "yCCPos", $CCPos[1])
@@ -222,7 +228,8 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "donate", "amount1", GUICtrlRead($NoOfBarbarians))
 	IniWrite($config, "donate", "amount2", GUICtrlRead($NoOfArchers))
 	IniWrite($config, "donate", "amount3", GUICtrlRead($NoOfGiants))
-
+	
+	
 	;Troop Settings--------------------------------------------------------------------------
 	IniWrite($config, "troop", "raidcapacity", _GUICtrlComboBox_GetCurSel($cmbRaidcap))
 	IniWrite($config, "troop", "composition", _GUICtrlComboBox_GetCurSel($cmbTroopComp))
