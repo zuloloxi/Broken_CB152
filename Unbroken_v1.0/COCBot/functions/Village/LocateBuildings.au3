@@ -68,6 +68,47 @@ Func LocateBarrack()
 	SetLog("-Barrack 4 = " & "(" & $barrackPos[3][0] & "," & $barrackPos[3][1] & ")", $COLOR_GREEN)
 EndFunc   ;==>LocateBarrack
 
+Func LocateDarkBarrack()
+	SetLog("Locating Dark Barracks...", $COLOR_BLUE)
+	Local $MsgBox
+	While 1
+		While 1
+			$MsgBox = MsgBox(6 + 262144, "Locate first Dark Barrack", "Click Continue then click on your first dark barrack. Cancel if not available. Try again to start over.", 0, $frmBot)
+			If $MsgBox = 11 Then
+				$DarkBarrackPos[0][0] = FindPos()[0]
+				$DarkBarrackPos[0][1] = FindPos()[1]
+			ElseIf $MsgBox = 10 Then
+				ExitLoop
+			Else
+				For $i = 0 To 1
+					$DarkBarrackPos[$i][0] = ""
+					$DarkBarrackPos[$i][1] = ""
+				Next
+				ExitLoop (2)
+			EndIf
+			If _Sleep(500) Then ExitLoop
+			$MsgBox = MsgBox(6 + 262144, "Locate second Dark Barrack", "Click Continue then click on your second dark barrack. Cancel if not available. Try again to start over.", 0, $frmBot)
+			If $MsgBox = 11 Then
+				$DarkBarrackPos[1][0] = FindPos()[0]
+				$DarkBarrackPos[1][1] = FindPos()[1]
+			ElseIf $MsgBox = 10 Then
+				ExitLoop
+			Else
+				For $i = 1 To 1
+					$DarkBarrackPos[$i][0] = ""
+					$DarkBarrackPos[$i][1] = ""
+				Next
+				ExitLoop (2)
+			EndIf
+			ExitLoop (2)
+		WEnd
+	WEnd
+	SaveConfig()
+	SetLog("-Locating Complete-", $COLOR_BLUE)
+	SetLog("-Dark Barrack 1 = " & "(" & $DarkBarrackPos[0][0] & "," & $DarkBarrackPos[0][1] & ")", $COLOR_GREEN)
+	SetLog("-Dark Barrack 2 = " & "(" & $DarkBarrackPos[1][0] & "," & $DarkBarrackPos[1][1] & ")", $COLOR_GREEN)
+
+EndFunc   ;==>LocateDarkBarrack
 
 Func LocateCamp()
 	While 1
