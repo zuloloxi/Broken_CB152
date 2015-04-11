@@ -34,6 +34,9 @@ EndIf
 DirCreate($dirLogs)
 DirCreate($dirLoots)
 DirCreate($dirAllTowns)
+DirCreate($dirDebug)
+DirCreate($dirAttack)
+DirCreate($dirConfigs)
 
 $sTimer = TimerInit()
 AdlibRegister("SetTime", 1000)
@@ -52,6 +55,7 @@ WEnd
 
 Func runBot() ;Bot that runs everything in order
 	While 1
+		loot_log_cleanup(100)
 		SaveConfig()
 		readConfig()
 		applyConfig()
@@ -142,6 +146,8 @@ Func runBot() ;Bot that runs everything in order
 		Pause()
 		If $CommandStop <> 0 And $CommandStop <> 3 Then
 			Train()
+			If _Sleep(1000) Then Return
+			TrainDark()
 			If _Sleep(1000) Then Return
 			If $needzoomout = True Then
 				checkMainScreen(False)
@@ -243,6 +249,8 @@ Func Idle() ;Sequence that runs until Full Army
 			If _Sleep(1000) Then Return
 			Train()
 			If _Sleep(1000) Then Return
+			TrainDark()
+			If _Sleep(1000) Then Return
 			If $needzoomout = True Then
 				checkMainScreen(False)
 				Pause()
@@ -305,3 +313,25 @@ Func Pause()
 		If _Sleep(1000) Then Return
 	WEnd
 EndFunc   ;==>Pause
+
+Func loot_log_cleanup($no_rotator)
+	local $dir_list[3] = ["Loots", "logs", "Debug"]
+	For $l = 0 To UBound($dir_list) - 1
+		local $dir = @ScriptDir & "\" & $dir_list[$l]
+		if FileExists($dir) == 0 then
+			SetLog("dir not found - " & $dir, $COLOR_RED)
+			continueloop
+		endif
+		local $fArray = _FileListToArrayRec($dir, "*", $FLTAR_FILESFOLDERS, $FLTAR_RECUR, $FLTAR_SORT, $FLTAR_FULLPATH )
+		if UBound($fArray) == 0 Then continueloop
+		local $data_size = $fArray[0]
+		if $data_size > $no_rotator Then
+			For $i = 1 To Number($data_size - $no_rotator)
+				local $file_path = $fArray[$i]
+				If Not FileDelete($file_path) Then
+					SetLog("Fail to del " & $file_path, $COLOR_RED)
+				EndIf
+			Next
+		endif
+	Next
+EndFunc

@@ -30,6 +30,15 @@ Func PrepareAttack($remaining = False) ;Assigns troops
 				ElseIf $troopKind = $eWallbreaker And $barrackTroop[$x] = 4 Then
 					$atkTroops[$i][0] = $troopKind
 					ExitLoop
+				ElseIf $troopKind = $eMinion And ($DarkBarrackTroop[0] = 0 Or $DarkBarrackTroop[1] = 0) Then
+					$atkTroops[$i][0] = $troopKind
+					ExitLoop
+				ElseIf $troopKind = $eHog And ($DarkBarrackTroop[0] = 1 Or $DarkBarrackTroop[1] = 1) Then
+					$atkTroops[$i][0] = $troopKind
+					ExitLoop
+				ElseIf $troopKind = $eValkyrie And ($DarkBarrackTroop[0] = 2 Or $DarkBarrackTroop[1] = 2) Then
+					$atkTroops[$i][0] = $troopKind
+					ExitLoop
 				ElseIf $troopKind <> $eKing And $troopKind <> $eQueen And $troopKind <> $eCastle And $troopKind <> $eLSpell Then
 					$troopKind = -1
 				EndIf
@@ -38,7 +47,7 @@ Func PrepareAttack($remaining = False) ;Assigns troops
 			If $troopKind <> $eLSpell Then
 				$troopKind = -1
 			EndIf
-		ElseIf $troopKind <> $eKing And $troopKind <> $eQueen And $troopKind <> $eCastle And $troopKind <> $eLSpell And ($troopKind = $eBarbarian And ($iAlgorithm = 0 Or $iAlgorithm = 2)) Or ($troopKind = $eArcher And ($iAlgorithm = 1 Or $iAlgorithm = 2)) Or ($troopKind = $eGiant And ($iAlgorithm = 0 Or $iAlgorithm = 1 Or $iAlgorithm = 2 Or $iAlgorithm = 3 Or $iAlgorithm = 6)) Or ($troopKind = $eGoblin And ($iAlgorithm = 0 Or $iAlgorithm = 1 Or $iAlgorithm = 3 Or $iAlgorithm = 5)) Or ($troopKind = $eWallbreaker And ($iAlgorithm <> 7 And $iAlgorithm <> 8 And $iAlgorithm <> 9)) Then
+		ElseIf $troopKind <> $eKing And $troopKind <> $eQueen And $troopKind <> $eCastle And $troopKind <> $eLSpell And ($troopKind = $eBarbarian And ($iAlgorithm = 0 Or $iAlgorithm = 2)) Or ($troopKind = $eArcher And ($iAlgorithm = 1 Or $iAlgorithm = 2)) Or ($troopKind = $eGiant And ($iAlgorithm = 0 Or $iAlgorithm = 1 Or $iAlgorithm = 2 Or $iAlgorithm = 3 Or $iAlgorithm = 6)) Or ($troopKind = $eGoblin And ($iAlgorithm = 0 Or $iAlgorithm = 1 Or $iAlgorithm = 3 Or $iAlgorithm = 5)) Or ($troopKind = $eWallbreaker And ($iAlgorithm <> 7 And $iAlgorithm <> 8 And $iAlgorithm <> 9)) Or ($troopKind = $eMinion And ($iAlgorithm <> 8 And $iAlgorithm <> 9)) Or ($troopKind = $eHog And ($iAlgorithm <> 8 And $iAlgorithm <> 9)) Or ($troopKind = $eValkyrie And ($iAlgorithm <> 8 And $iAlgorithm <> 9)) Then	
 			$troopKind = -1
 		EndIf
 

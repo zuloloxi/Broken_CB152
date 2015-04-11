@@ -130,6 +130,50 @@ Func DonateCC()
 		Click(331, 330) ;Clicks chat thing
 		If _Sleep(500) Then Return
 	EndIf
+;------------------------gtfo------------------------;
+If GUICtrlRead($gtfo) = 1 Then
+Local $scroll, $kick_y, $kicked = 0
+While 1
+Click($CCPos[0], $CCPos[1]) ; click clan castle
+If _Sleep(500) Then Return
+Click(530, 600) ; open clan page
+If _Sleep(5000) Then Return ; wait for it to load
+$scroll = 0
+While 1
+         _CaptureRegion(190, 80, 220, 650)
+         If _Sleep(1000) Then ExitLoop
+         Local $new = _PixelSearch(200, 80, 210, 650, Hex(0xE73838, 6), 20)
+         If IsArray($new) Then
+            SetLog("x:" & $new[0] & " y:" & $new[1], $COLOR_RED) ; debuggin purpose
+            Click($new[0], $new[1])
+            If _Sleep(500) Then ExitLoop
+            If $new[1]+80> 640 Then
+             $kick_y = 640
+            Else
+             $kick_y = $new[1] + 80
+            EndIf
+            Click($new[0] + 300, $kick_y) ; kick button, hopefully
+            If _Sleep(500) Then ExitLoop
+            ;_CaptureRegion(510, 230, 530, 250)
+            ;If _ColorCheck(_GetPixelColor(520, 240), Hex(0x60B010, 6), 10) Then Click(520, 240)
+            Click(520, 240)
+            If _Sleep(500) Then ExitLoop
+            $kicked += 1
+            SetLog($kicked & " Kicked!", $COLOR_RED)
+            If _Sleep(2000) Then ExitLoop
+            ExitLoop
+Else
+ControlSend($Title, "", "", "{CTRLDOWN}{UP}{CTRLUP}") ; scroll down the member list
+SetLog("Scrolling down", $COLOR_RED)
+$scroll += 1
+If _Sleep(3000) Then ExitLoop
+EndIf
+If $scroll = 8 Then ExitLoop(2)
+WEnd
+WEnd
+EndIf
+SetLog("Finished kicking", $COLOR_RED)
+Click(1, 1, 1, 2000)
 EndFunc   ;==>DonateCC
 
 Func CheckDonate($String, $clanString) ;Checks if it exact

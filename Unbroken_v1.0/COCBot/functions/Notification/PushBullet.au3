@@ -128,39 +128,53 @@ Func _PushFile($File, $Folder, $FileType, $title, $body)
 	Local $policy = _StringBetween($Result, 'policy":"', '"')
 	Local $file_url = _StringBetween($Result, 'file_url":"', '"')
 
-	$Result = RunWait(@ScriptDir & "\curl\curl.exe -i -X POST " & $upload_url[0] & ' -F awsaccesskeyid="' & $awsaccesskeyid[0] & '" -F acl="' & $acl[0] & '" -F key="' & $key[0] & '" -F signature="' & $signature[0] & '" -F policy="' & $policy[0] & '" -F content-type="' & $FileType & '" -F file=@"' & @ScriptDir & '\' & $Folder & '\' & $File & '" -o "' & @ScriptDir & '\logs\curl.log"', "", @SW_HIDE)
-
-	If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
-		SetLog('=========================================================================')
-		SetLog($Result)
-		SetLog($upload_url[0])
-		SetLog($acl[0])
-		SetLog($key[0])
-		SetLog($signature[0])
-		SetLog($policy[0])
-		SetLog($awsaccesskeyid[0])
-		SetLog($file_url[0])
-		SetLog($Result1)
-		SetLog(@ScriptDir & "\curl\curl.exe -i -X POST " & $upload_url[0] & ' -F awsaccesskeyid="' & $awsaccesskeyid[0] & '" -F acl="' & $acl[0] & '" -F key="' & $key[0] & '" -F signature="' & $signature[0] & '" -F policy="' & $policy[0] & '" -F content-type="' & $FileType & '" -F file=@"' & @ScriptDir & '\' & $Folder & '\' & $File & '" -o "' & @ScriptDir & '\logs\curl.log"')
-	EndIf
-	Local $hFileOpen = FileOpen(@ScriptDir & '\logs\curl.log')
-	Local $sFileRead = FileReadLine($hFileOpen, 8)
-	Local $sFileRead1 = StringSplit($sFileRead, " ")
-	Local $sLink = $sFileRead1[2]
-	Local $findstr1 = StringRegExp($sLink, 'https://')
-
-	If $findstr1 = 1 Then
-		$oHTTP.Open("Post", "https://api.pushbullet.com/v2/pushes", False)
-		$oHTTP.SetCredentials($access_token, "", 0)
-		$oHTTP.SetRequestHeader("Content-Type", "application/json")
-		;Local $pPush = '{"type": "file", "file_name": "' & $FileName & '", "file_type": "' & $FileType & '", "file_url": "' & $file_url[0] & '", "title": "' & $title & '", "body": "' & $body & '"}'
-		Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $sLink & '", "title": "' & $title & '", "body": "' & $body & '"}'
-		$oHTTP.Send($pPush)
-		$Result = $oHTTP.ResponseText
+	If IsArray($upload_url) And IsArray($awsaccesskeyid) And IsArray($acl) And IsArray($key) And IsArray($signature) and IsArray($policy) Then
+		$Result = RunWait(@ScriptDir & "\curl\curl.exe -i -X POST " & $upload_url[0] & ' -F awsaccesskeyid="' & $awsaccesskeyid[0] & '" -F acl="' & $acl[0] & '" -F key="' & $key[0] & '" -F signature="' & $signature[0] & '" -F policy="' & $policy[0] & '" -F content-type="' & $FileType & '" -F file=@"' & @ScriptDir & '\' & $Folder & '\' & $File & '" -o "' & @ScriptDir & '\logs\curl.log"', "", @SW_HIDE)
+		If Not FileExists($dirLogs & "curl.log") then _FileCreate($dirLogs & "curl.log")
+		If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+			SetLog('=========================================================================')
+			SetLog($Result)
+			SetLog($upload_url[0])
+			SetLog($acl[0])
+			SetLog($key[0])
+			SetLog($signature[0])
+			SetLog($policy[0])
+			SetLog($awsaccesskeyid[0])
+			SetLog($file_url[0])
+			SetLog($Result1)
+			SetLog(@ScriptDir & "\curl\curl.exe -i -X POST " & $upload_url[0] & ' -F awsaccesskeyid="' & $awsaccesskeyid[0] & '" -F acl="' & $acl[0] & '" -F key="' & $key[0] & '" -F signature="' & $signature[0] & '" -F policy="' & $policy[0] & '" -F content-type="' & $FileType & '" -F file=@"' & @ScriptDir & '\' & $Folder & '\' & $File & '" -o "' & @ScriptDir & '\logs\curl.log"')
+		EndIf
+		If Not FileExists($dirLogs & "curl.log") then _FileCreate($dirLogs & "curl.log")
+        	If _FileCountLines(@ScriptDir & '\logs\curl.log') > 8 Then
+        		Local $hFileOpen = FileOpen(@ScriptDir & '\logs\curl.log')
+			Local $sFileRead = FileReadLine($hFileOpen, 8)
+			Local $sFileRead1 = StringSplit($sFileRead, " ")
+			Local $sLink = $sFileRead1[2]
+			Local $findstr1 = StringRegExp($sLink, 'https://')
+			If $findstr1 = 1 Then
+				$oHTTP.Open("Post", "https://api.pushbullet.com/v2/pushes", False)
+				$oHTTP.SetCredentials($access_token, "", 0)
+				$oHTTP.SetRequestHeader("Content-Type", "application/json")
+				;Local $pPush = '{"type": "file", "file_name": "' & $FileName & '", "file_type": "' & $FileType & '", "file_url": "' & $file_url[0] & '", "title": "' & $title & '", "body": "' & $body & '"}'
+				Local $pPush = '{"type": "file", "file_name": "' & $File & '", "file_type": "' & $FileType & '", "file_url": "' & $sLink & '", "title": "' & $title & '", "body": "' & $body & '"}'
+				$oHTTP.Send($pPush)
+				$Result = $oHTTP.ResponseText
+			Else
+				If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+					SetLog($hFileOpen)
+					SetLog("There is an error and file was not uploaded")
+				EndIf
+			EndIf
+		Else
+			If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
+				SetLog("Error encountered uploading file.")
+			EndIf
+		EndIf		
 	Else
 		If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then
-			SetLog($hFileOpen)
-			SetLog("There is an error and file was not uploaded")
+			SetLog('=========================================================================')
+			SetLog('Malformed HTTP response:')
+			SetLog($Result)
 		EndIf
 	EndIf
 	If GUICtrlRead($lblpushbulletdebug) = $GUI_CHECKED Then

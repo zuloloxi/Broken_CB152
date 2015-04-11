@@ -44,6 +44,8 @@ Global $dirLoots = @ScriptDir & "\Loots\"
 Global $dirAttack = @ScriptDir & "\Attacks\"
 Global $dirDebug = @ScriptDir & "\Debug\"
 Global $dirAllTowns = @ScriptDir & "\AllTowns\"
+Global $dirConfigs = @ScriptDir & "\config\"
+Global $config = @ScriptDir & "\config\default.ini"
 Global $sLogPath ; `Will create a new log file every time the start button is pressed
 Global $hLogFileHandle
 Global $Restart = False
@@ -89,7 +91,7 @@ Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 
 ;Troop types
-Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eKing, $eQueen, $eCastle, $eLSpell
+Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell
 
 ;Attack Settings
 ; Shift outer corners 1 pixel for more random drop space
@@ -180,7 +182,7 @@ Global $THquadrant
 Global $Buffer
 Global $pBarbarian, $pArcher, $pGoblin, $pGiant, $pWallB, $pLightning, $pKing, $pQueen, $pCC
 
-Global $King, $Queen, $CC, $Barb, $Arch
+Global $King, $Queen, $CC, $Barb, $Arch, $Minion, $Hog, $Valkyrie
 Global $LeftTHx, $RightTHx, $BottomTHy, $TopTHy
 Global $AtkTroopTH
 Global $GetTHLoc
@@ -205,6 +207,9 @@ Global $chkBoostRax1
 Global $chkBoostRax2
 Global $chkBoostRax3
 Global $chkBoostRax4
+Global $chkBoostSpell
+Global $chkBoostDB1
+Global $chkBoostDB2
 
 ;Donate Settings
 Global $CCPos[2] = [-1, -1] ;Position of clan castle
@@ -252,6 +257,7 @@ Global $BuildPos2[2]
 Global $BuildPos3[2]
 
 ;Other Settings
+Global $CurMinion, $CurHog, $CurValkyrie
 Global $ichkWalls
 Global $icmbWalls
 Global $iUseStorage
@@ -259,6 +265,10 @@ Global $itxtWallMinGold
 Global $itxtWallMinElixir
 Global $icmbTolerance
 Global $itxtReconnect
+Global $DarkBarrackPos[2][2]
+Global $DarkBarrackTroop[2]
+Global $itxtDarkBarrack1, $itxtDarkBarrack2
+Global $ichkDarkTroop
 Global $iTimeTroops = 0
 Global $iTimeGiant = 120
 Global $iTimeWall = 120
@@ -342,6 +352,7 @@ Global $NoLeague
 Global $FirstStart = True
 Global $DCattack = 0
 Global $Checkrearm = True
+Global $FirstDarkTrain = True
 
 ;PushBullet
 Global $PushBulletEnabled = 0

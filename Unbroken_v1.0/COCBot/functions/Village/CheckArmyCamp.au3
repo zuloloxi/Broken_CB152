@@ -24,13 +24,25 @@ Func CheckArmyCamp()
 
 		_CaptureRegion()
 		Switch $icmbRaidcap
-			Case 0 ; 70%
-				Local $Campbar = _PixelSearch(620, 210, 622, 213, Hex(0x37A800, 6), 5)
-			Case 1 ; 80%
-				Local $Campbar = _PixelSearch(649, 210, 651, 213, Hex(0x37A800, 6), 5)
-			Case 2 ; 90%
-				Local $Campbar = _PixelSearch(677, 210, 679, 213, Hex(0x37A800, 6), 5)
-			Case 3 ; 100%
+			Case 0 ; 10%
+				Local $Campbar = _PixelSearch(454, 210, 456, 213, Hex(0x37A800, 6), 5)
+			Case 1 ; 20%
+				Local $Campbar = _PixelSearch(482, 210, 484, 213, Hex(0x37A800, 6), 5)
+			Case 2 ; 30%
+				Local $Campbar = _PixelSearch(510, 210, 512, 213, Hex(0x37A800, 6), 5)
+			Case 3 ; 40%
+				Local $Campbar = _PixelSearch(538, 210, 540, 213, Hex(0x37A800, 6), 5)
+			Case 4 ; 50%
+				Local $Campbar = _PixelSearch(566, 210, 568, 213, Hex(0x37A800, 6), 5)
+			Case 5 ; 60%
+				Local $Campbar = _PixelSearch(595, 210, 597, 213, Hex(0x37A800, 6), 5)
+			Case 6 ; 70%
+				Local $Campbar = _PixelSearch(623, 210, 625, 213, Hex(0x37A800, 6), 5)
+			Case 7 ; 80%
+				Local $Campbar = _PixelSearch(651, 210, 653, 213, Hex(0x37A800, 6), 5)
+			Case 8 ; 90%
+				Local $Campbar = _PixelSearch(679, 210, 681, 213, Hex(0x37A800, 6), 5)
+			Case 9 ; 100%
 				Local $Campbar = _PixelSearch(707, 210, 709, 213, Hex(0x37A800, 6), 5)
 		EndSwitch
 		$CurCamp = Number(getOther(586, 193, "Camp"))
@@ -51,6 +63,7 @@ Func CheckArmyCamp()
 			EndIf
 			For $i = 0 To 6
 				Local $TroopKind = _GetPixelColor(230 + 71 * $i, 359)
+				Local $TroopKind2 = _GetPixelColor(230 + 71 * $i, 385)
 				Local $TroopName = 0
 				Local $TroopQ = getOther(229 + 71 * $i, 413, "Camp")
 				If _ColorCheck($TroopKind, Hex(0xF85CCB, 6), 20) Then
@@ -68,6 +81,15 @@ Func CheckArmyCamp()
 				ElseIf _ColorCheck($TroopKind, Hex(0x48A8E8, 6), 20) Then
 					If ($CurWB = 0 And $FirstStart) Then $CurWB -= $TroopQ
 					$TroopName = "Wallbreakers"
+				ElseIf _ColorCheck($TroopKind, Hex(0x131D38, 6), 20) Then
+					   If ($FirstStart) Then $CurMinion -= $TroopQ
+					   $TroopName = "Minions"
+				ElseIf _ColorCheck($TroopKind2, Hex(0x212018, 6), 20) Then
+					If ($FirstStart) Then $CurHog -= $TroopQ
+					$TroopName = "Hogs"
+				ElseIf _ColorCheck($TroopKind, Hex(0x983B08, 6), 20) Then
+					If ($FirstStart) Then $CurValkyrie -= $TroopQ
+					$TroopName = "Valkyries"
 				EndIf
 				If $TroopQ <> 0 Then SetLog("- " & $TroopName & " " & $TroopQ, $COLOR_GREEN)
 			Next
