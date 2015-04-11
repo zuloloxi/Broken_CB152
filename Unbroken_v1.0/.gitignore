@@ -9,7 +9,7 @@ Debug/
 logs/
 Loots/
 COC Bot.exe
-config/*
+config/default.ini
 config.ini
 
 ######################

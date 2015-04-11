@@ -91,7 +91,7 @@ Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 
 ;Troop types
-Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eKing, $eQueen, $eCastle, $eLSpell, $eMinion, $eHog, $eValkyrie
+Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell
 
 ;Attack Settings
 ; Shift outer corners 1 pixel for more random drop space
