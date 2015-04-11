@@ -233,6 +233,13 @@ GUICtrlSetTip(-1, "Request for input.")
 $btnLocateClanCastle = GUICtrlCreateButton("Locate Clan Castle Manually", 25, 325, 365, 25)
 GUICtrlSetOnEvent(-1, "btnLocateClanCastle")
 GUICtrlCreateGroup("", -99, -99, 1, 1)
+$txtRequest = GUICtrlCreateInput("any", 115, 45, 200, 21) ;===> change this to 200 (third number)
+GUICtrlSetTip(-1, "Request for input.")
+$gtfo = GUICtrlCreateCheckbox("GTFO", 330, 47, 50, 17) ;==> add this
+GUICtrlSetTip(-1, "Kick after donating") ; ==> add this too
+$btnLocateClanCastle = GUICtrlCreateButton("Locate Clan Castle Manually", 25, 325, 365, 25)
+GUICtrlSetOnEvent(-1, "btnLocateClanCastle")
+GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 
 ;Troops Tab
