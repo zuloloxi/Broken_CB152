@@ -63,6 +63,7 @@ Func CheckArmyCamp()
 			EndIf
 			For $i = 0 To 6
 				Local $TroopKind = _GetPixelColor(230 + 71 * $i, 359)
+				Local $TroopKind2 = _GetPixelColor(230 + 71 * $i, 385)
 				Local $TroopName = 0
 				Local $TroopQ = getOther(229 + 71 * $i, 413, "Camp")
 				If _ColorCheck($TroopKind, Hex(0xF85CCB, 6), 20) Then
@@ -80,6 +81,15 @@ Func CheckArmyCamp()
 				ElseIf _ColorCheck($TroopKind, Hex(0x48A8E8, 6), 20) Then
 					If ($CurWB = 0 And $FirstStart) Then $CurWB -= $TroopQ
 					$TroopName = "Wallbreakers"
+				ElseIf _ColorCheck($TroopKind, Hex(0x131D38, 6), 20) Then
+					   If ($FirstStart) Then $CurMinion -= $TroopQ
+					   $TroopName = "Minions"
+				ElseIf _ColorCheck($TroopKind2, Hex(0x212018, 6), 20) Then
+					If ($FirstStart) Then $CurHog -= $TroopQ
+					$TroopName = "Hogs"
+				ElseIf _ColorCheck($TroopKind, Hex(0x983B08, 6), 20) Then
+					If ($FirstStart) Then $CurValkyrie -= $TroopQ
+					$TroopName = "Valkyries"
 				EndIf
 				If $TroopQ <> 0 Then SetLog("- " & $TroopName & " " & $TroopQ, $COLOR_GREEN)
 			Next
