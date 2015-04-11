@@ -91,7 +91,7 @@ Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 
 ;Troop types
-Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eKing, $eQueen, $eCastle, $eLSpell
+Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eKing, $eQueen, $eCastle, $eLSpell, $eMinion, $eHog, $eValkyrie
 
 ;Attack Settings
 ; Shift outer corners 1 pixel for more random drop space
@@ -182,7 +182,7 @@ Global $THquadrant
 Global $Buffer
 Global $pBarbarian, $pArcher, $pGoblin, $pGiant, $pWallB, $pLightning, $pKing, $pQueen, $pCC
 
-Global $King, $Queen, $CC, $Barb, $Arch
+Global $King, $Queen, $CC, $Barb, $Arch, $Minion, $Hog, $Valkyrie
 Global $LeftTHx, $RightTHx, $BottomTHy, $TopTHy
 Global $AtkTroopTH
 Global $GetTHLoc
@@ -257,6 +257,7 @@ Global $BuildPos2[2]
 Global $BuildPos3[2]
 
 ;Other Settings
+Global $CurMinion, $CurHog, $CurValkyrie
 Global $ichkWalls
 Global $icmbWalls
 Global $iUseStorage
@@ -264,6 +265,10 @@ Global $itxtWallMinGold
 Global $itxtWallMinElixir
 Global $icmbTolerance
 Global $itxtReconnect
+Global $DarkBarrackPos[2][2]
+Global $DarkBarrackTroop[2]
+Global $itxtDarkBarrack1, $itxtDarkBarrack2
+Global $ichkDarkTroop
 Global $iTimeTroops = 0
 Global $iTimeGiant = 120
 Global $iTimeWall = 120
@@ -347,6 +352,7 @@ Global $NoLeague
 Global $FirstStart = True
 Global $DCattack = 0
 Global $Checkrearm = True
+Global $FirstDarkTrain = True
 
 ;PushBullet
 Global $PushBulletEnabled = 0

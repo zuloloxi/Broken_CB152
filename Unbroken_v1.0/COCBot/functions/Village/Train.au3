@@ -14,6 +14,12 @@ Func GetTrainPos($troopKind)
 			Return $TrainGoblin
 		Case $eWallbreaker ; 688, 366, 0x3AD8E0
 			Return $TrainWallbreaker
+		Case $eMinion
+			Return $TrainMinion
+		Case $eHog
+			Return $TrainHog
+		Case $eValkyrie
+			Return $TrainValkyrie
 		Case Else
 			SetLog("Don't know how to train the troop " & $troopKind & " yet")
 			Return 0

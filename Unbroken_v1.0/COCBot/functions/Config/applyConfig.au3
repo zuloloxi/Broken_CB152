@@ -271,6 +271,17 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	GUICtrlSetData($txtWallMinGold, $itxtWallMinGold)
 	GUICtrlSetData($txtWallMinElixir, $itxtWallMinElixir)
 
+	;Dark Troops---------------------------------------------
+	If $ichkDarkTroop = 1 Then
+		GUICtrlSetState($chkDarkTroop, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbDarkBarrack1, $DarkBarrackTroop[0])
+	_GUICtrlComboBox_SetCurSel($cmbDarkBarrack2, $DarkBarrackTroop[1])
+	GUICtrlSetData($txtDarkBarrack1, $itxtDarkBarrack1)
+	GUICtrlSetData($txtDarkBarrack2, $itxtDarkBarrack2)
+	
 	;Spell Settings--------------------------------------------------------------------------
 	If $ichkMakeSpells = 1 Then
 		GUICtrlSetState($chkMakeSpells, $GUI_CHECKED)

@@ -41,6 +41,20 @@ Func BoostAllBuilding()
 			BoostBuilding()
 		EndIf
 
+		If GUICtrlRead($chkBoostDB1) = 1 Then; Dark Barrack 1
+			SetLog("Boosting Dark Barrack 1...", $COLOR_BLUE)
+			Click($DarkBarrackPos[0][0], $DarkBarrackPos[0][1]) ;Click Dark Barrack 1
+			If _Sleep(500) Then Return
+			BoostBuilding()
+		 EndIf
+
+		 If GUICtrlRead($chkBoostDB2) = 1 Then; Dark Barrack 2
+			SetLog("Boosting Dark Barrack 2...", $COLOR_BLUE)
+			Click($DarkBarrackPos[1][0], $DarkBarrackPos[1][1]) ;Click Dark Barrack 2
+			If _Sleep(500) Then Return
+			BoostBuilding()
+		 EndIf
+		 
 		If GUICtrlRead($chkBoostKing) = 1 Then; King Altar
 			If $KingPos[0] = "" Then
 				LocateKingAltar()

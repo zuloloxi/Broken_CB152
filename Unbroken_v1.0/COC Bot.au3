@@ -146,6 +146,8 @@ Func runBot() ;Bot that runs everything in order
 		If $CommandStop <> 0 And $CommandStop <> 3 Then
 			Train()
 			If _Sleep(1000) Then Return
+			TrainDark()
+			If _Sleep(1000) Then Return
 			If $needzoomout = True Then
 				checkMainScreen(False)
 				$needzoomout = False
@@ -245,6 +247,8 @@ Func Idle() ;Sequence that runs until Full Army
 			CheckArmyCamp()
 			If _Sleep(1000) Then Return
 			Train()
+			If _Sleep(1000) Then Return
+			TrainDark()
 			If _Sleep(1000) Then Return
 			If $needzoomout = True Then
 				checkMainScreen(False)

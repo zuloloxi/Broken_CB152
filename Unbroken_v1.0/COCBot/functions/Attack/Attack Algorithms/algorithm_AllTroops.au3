@@ -530,6 +530,12 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		If LauchTroop($eGiant, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
+		If LauchTroop($eHog, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+			If _Sleep(SetSleep(1)) Then Return
+		EndIf
+	    	If LauchTroop($eValkyrie, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+			If _Sleep(SetSleep(1)) Then Return
+		EndIf
 		If LauchTroop($eBarbarian, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
@@ -551,7 +557,9 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		If LauchTroop($eGoblin, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-
+		If LauchTroop($eMinion, $nbSides, 1, 1, 0, ($OuterQuad And $attackTH = 2)) Then
+			If _Sleep(SetSleep(1)) Then Return
+		EndIf
 		; ================================================================================?
 
 		; Deploy CC and Heroes behind troops
@@ -627,11 +635,11 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		SetLog("~Dropping left over troops", $COLOR_BLUE)
 		For $x = 0 To 1
 			PrepareAttack(True) ;Check remaining quantities
-			For $i = $eBarbarian To $eWallbreaker ; lauch all remaining troops
-				If $i = $eBarbarian Or $i = $eArcher Then
+			For $i = $eBarbarian To $eMinion ; lauch all remaining troops
+				If $i = $eBarbarian Or $i = $eArcher Or $i = $eMinion Or $i = $eHog Or $i = $eValkyrie Then
 					LauchTroop($i, $nbSides, 0, 1)
 				Else
-					LauchTroop($i, $nbSides, 0, 1, 2)
+					If $i <> $eLSpell then LauchTroop($i, $nbSides, 0, 1, 2)
 				EndIf
 				If _Sleep(500) Then Return
 			Next

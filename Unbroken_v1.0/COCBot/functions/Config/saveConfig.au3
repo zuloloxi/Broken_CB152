@@ -305,6 +305,12 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "other", "minwallgold", GUICtrlRead($txtWallMinGold))
 	IniWrite($config, "other", "minwallelixir", GUICtrlRead($txtWallMinElixir))
 
+	;Dark Barracks
+    	IniWrite($config, "other", "Darktroop1", _GUICtrlComboBox_GetCurSel($cmbDarkBarrack1))
+	IniWrite($config, "other", "Darktroop2", _GUICtrlComboBox_GetCurSel($cmbDarkBarrack2))
+	IniWrite($config, "other", "DarkRax1", GUICtrlRead($txtDarkBarrack1))
+	IniWrite($config, "other", "DarkRax2", GUICtrlRead($txtDarkBarrack2))
+	
 	;Upgrade Building.......................................................................
 
 	If GUICtrlRead($chkUpgrade1) = $GUI_CHECKED Then
@@ -537,6 +543,18 @@ Func saveConfig() ;Saves the controls settings to the config
 
 	IniWrite($config, "general", "Command", _GUICtrlComboBox_GetCurSel($cmbBotCommand))
 	IniWrite($config, "general", "Cond", _GUICtrlComboBox_GetCurSel($cmbBotCond))
+	
+	;Dark Barracks
+	For $i = 0 To 1 ;Cover 2 Dark Barracks
+		IniWrite($config, "other", "xDarkBarrack" & $i + 1, $DarkBarrackPos[$i][0])
+		IniWrite($config, "other", "yDarkBarrack" & $i + 1, $DarkBarrackPos[$i][1])
+	Next
+	
+	If GUICtrlRead($chkDarkTroop) = $GUI_CHECKED Then
+		IniWrite($config, "other", "chkDarkTroop", 1)
+	Else
+		IniWrite($config, "other", "chkDarkTroop", 0)
+	EndIf
 
 	For $i = 0 To 16 ;Covers all Collectors
 		IniWrite($config, "general", "xCollector" & $i + 1, $collectorPos[$i][0])

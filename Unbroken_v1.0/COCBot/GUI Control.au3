@@ -183,6 +183,7 @@ Func Initiate()
 		$FirstStart = True
 		$Checkrearm = True
 		GUICtrlSetState($cmbBoostBarracks, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateDarkBarracks, $GUI_DISABLE)
 		GUICtrlSetState($btnLocateBarracks, $GUI_DISABLE)
 		GUICtrlSetState($btnLocateCamp, $GUI_DISABLE)
 		GUICtrlSetState($btnFindWall, $GUI_DISABLE)
@@ -272,6 +273,7 @@ Func btnStop()
 		EnableBS($HWnD, $SC_MINIMIZE)
 		EnableBS($HWnD, $SC_CLOSE)
 		GUICtrlSetState($btnLocateBarracks, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateDarkBarracks, $GUI_ENABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_ENABLE)
 		GUICtrlSetState($cmbTroopComp, $GUI_ENABLE)
 		;GUICtrlSetState($btnLocateCollectors, $GUI_ENABLE)
@@ -321,6 +323,16 @@ Func btnLocateBarracks()
 	WEnd
 	$RunState = False
 EndFunc   ;==>btnLocateBarracks
+
+Func btnLocateDarkBarracks()
+	$RunState = True
+	While 1
+		ZoomOut()
+		LocateDarkBarrack()
+		ExitLoop
+	WEnd
+	$RunState = False
+EndFunc   ;==>btnLocateDarkBarracks
 
 Func btnLocateSFactory()
 	$RunState = True
@@ -478,6 +490,7 @@ Func btnSearchMode()
 		GUICtrlSetState($btnStop, $GUI_SHOW)
 
 		GUICtrlSetState($btnLocateBarracks, $GUI_DISABLE)
+		GUICtrlSetState($btnLocateDarkBarracks, $GUI_DISABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_DISABLE)
 		GUICtrlSetState($cmbTroopComp, $GUI_DISABLE)
 		GUICtrlSetState($chkBackground, $GUI_DISABLE)
@@ -491,6 +504,7 @@ Func btnSearchMode()
 		GUICtrlSetState($btnStop, $GUI_HIDE)
 
 		GUICtrlSetState($btnLocateBarracks, $GUI_ENABLE)
+		GUICtrlSetState($btnLocateDarkBarracks, $GUI_ENABLE)
 		GUICtrlSetState($btnSearchMode, $GUI_ENABLE)
 		GUICtrlSetState($cmbTroopComp, $GUI_ENABLE)
 		GUICtrlSetState($chkBackground, $GUI_ENABLE)
@@ -547,7 +561,14 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtGoblins, $GUI_DISABLE)
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
-
+			
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			; Begin Section - Allow composition change
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
@@ -573,6 +594,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, "100")
 			GUICtrlSetData($txtArchers, "0")
 			GUICtrlSetData($txtGoblins, "0")
@@ -591,6 +619,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, "0")
 			GUICtrlSetData($txtArchers, "0")
 			GUICtrlSetData($txtGoblins, "100")
@@ -609,6 +644,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, "0")
@@ -627,6 +669,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_ENABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, $GoblinsComp)
@@ -645,6 +694,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_ENABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, "0")
@@ -663,6 +719,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, $GoblinsComp)
@@ -681,6 +744,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_ENABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_ENABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, $GoblinsComp)
@@ -698,6 +768,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtGoblins, $GUI_DISABLE)
 			GUICtrlSetState($txtNumGiants, $GUI_DISABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_DISABLE)
+			
+			GUICtrlSetState($chkDarkTroop, $GUI_ENABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_ENABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_ENABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_ENABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_ENABLE)
+
 		Case 9
 			GUICtrlSetState($cmbBarrack1, $GUI_DISABLE)
 			GUICtrlSetState($cmbBarrack2, $GUI_DISABLE)
@@ -710,6 +787,13 @@ Func SetComboTroopComp()
 			GUICtrlSetState($txtNumGiants, $GUI_ENABLE)
 			GUICtrlSetState($txtNumWallbreakers, $GUI_ENABLE)
 
+			GUICtrlSetState($chkDarkTroop, $GUI_UNCHECKED)
+			GUICtrlSetState($chkDarkTroop, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($cmbDarkBarrack2, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack1, $GUI_DISABLE)
+			GUICtrlSetState($txtDarkBarrack2, $GUI_DISABLE)
+			
 			GUICtrlSetData($txtBarbarians, $BarbariansComp)
 			GUICtrlSetData($txtArchers, $ArchersComp)
 			GUICtrlSetData($txtGoblins, $GoblinsComp)

@@ -84,3 +84,4 @@
 #include "functions\Village\CheckCostPerSearch.au3"
 
 #include "functions\Notification\PushBullet.au3"
+#include "functions\Village\TrainDark.au3"

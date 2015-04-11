@@ -87,7 +87,12 @@ Func readConfig() ;Reads config and sets it to the variables
 		$itxtWallMinGold = IniRead($config, "other", "minwallgold", "0")
 		$itxtWallMinElixir = IniRead($config, "other", "minwallelixir", "0")
 		$icmbTolerance = IniRead($config, "other", "walltolerance", "0")
-
+	
+		;Dark Troops
+		$ichkDarkTroop = IniRead($config, "other", "chkDarkTroop", "0")
+		$itxtDarkBarrack1 = IniRead($config, "other", "DarkRax1", "0")
+		$itxtDarkBarrack2 = IniRead($config, "other", "DarkRax2", "0")
+		
 		;Other Settings--------------------------------------------------------------------------
 		;Spells
 		$ichkMakeSpells = IniRead($config, "spells", "chkMakeSpells", "0")
@@ -176,6 +181,12 @@ Func readConfig() ;Reads config and sets it to the variables
 			$barrackPos[$i][0] = IniRead($config, "troop", "xBarrack" & $i + 1, "0")
 			$barrackPos[$i][1] = IniRead($config, "troop", "yBarrack" & $i + 1, "0")
 			$barrackTroop[$i] = IniRead($config, "troop", "troop" & $i + 1, "0")
+		Next
+		
+		For $i = 0 To 1 ;Cover 2 Dark Barracks
+			$DarkBarrackPos[$i][0] = IniRead($config, "other", "xDarkBarrack" & $i + 1, "0")
+			$DarkBarrackPos[$i][1] = IniRead($config, "other", "yDarkBarrack" & $i + 1, "0")
+			$DarkBarrackTroop[$i] = IniRead($config, "other", "Darktroop" & $i + 1, "0")
 		Next
 
 		For $i = 0 To 16 ;Covers all Collectors
