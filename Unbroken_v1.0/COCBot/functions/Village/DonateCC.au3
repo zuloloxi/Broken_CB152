@@ -130,11 +130,6 @@ Func DonateCC()
 		Click(331, 330) ;Clicks chat thing
 		If _Sleep(500) Then Return
 	EndIf
-	 If _WaitForPixel(331, 330, Hex(0xF0A03B, 6), 20) Then
-        Click(331, 330) ;Clicks chat thing
-        If _Sleep(500) Then Return
-    EndIf
-    SetLog("Finished Donating", $COLOR_BLUE) ; original file end here
 ;------------------------gtfo------------------------;
 If GUICtrlRead($gtfo) = 1 Then
 Local $scroll, $kick_y, $kicked = 0
