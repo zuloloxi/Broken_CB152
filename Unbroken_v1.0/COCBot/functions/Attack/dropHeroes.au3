@@ -10,9 +10,9 @@ Func dropHeroes($x, $y, $KingSlot = -1, $QueenSlot = -1, $CenterLoc = 1) ;Drops 
 
 		If $KingSlot <> -1 And $useKing = 1 Then
 			SetLog("Dropping King", $COLOR_BLUE)
-			Click(68 + (72 * $KingSlot), 595, 1, 0, $CenterLoc) ;Select King
+			Click(68 + (72 * $KingSlot), 595) ;Select King
 			If _Sleep(500) Then Return
-			Click($x, $y)
+			Click($x, $y, 1, 0, $CenterLoc, 30)
 			_GDIPlus_GraphicsDrawEllipse($Buffer, $x - 6, $y - 6, 12, 12, $pKing)
 			$checkKPower = True
 		EndIf
@@ -21,9 +21,9 @@ Func dropHeroes($x, $y, $KingSlot = -1, $QueenSlot = -1, $CenterLoc = 1) ;Drops 
 
 		If $QueenSlot <> -1 And $useQueen = 1 Then
 			SetLog("Dropping Queen", $COLOR_BLUE)
-			Click(68 + (72 * $QueenSlot), 595, 1, 0, $CenterLoc) ;Select Queen
+			Click(68 + (72 * $QueenSlot), 595) ;Select Queen
 			If _Sleep(500) Then Return
-			Click($x, $y)
+			Click($x, $y, 1, 0, $CenterLoc, 30)
 			_GDIPlus_GraphicsDrawEllipse($Buffer, $x - 5, $y - 5, 10, 10, $pQueen)
 			$checkQPower = True
 		EndIf
