@@ -1172,16 +1172,6 @@ Func getfilename($psFilename)
 	_PathSplit($psFilename, $szDrive, $szDir, $szFName, $szExt)
 	Return $szFName & $szExt
 EndFunc   ;==>getfilename
-;---------------------------------------------------
-If FileExists($config) Then
-	readConfig()
-	applyConfig()
-EndIf
-
-GUIRegisterMsg($WM_COMMAND, "GUIControl")
-GUIRegisterMsg($WM_SYSCOMMAND, "GUIControl")
-;---------------------------------------------------
-
 
 Func btnBugRep()
 
@@ -1221,4 +1211,16 @@ Func btnBugRep()
 	GUISetState(@SW_SHOW, $frmBugReport)
 
 EndFunc
+
+;---------------------------------------------------
+If FileExists($config) Then
+	readConfig()
+	applyConfig()
+EndIf
+checkupdate()
+
+GUIRegisterMsg($WM_COMMAND, "GUIControl")
+GUIRegisterMsg($WM_SYSCOMMAND, "GUIControl")
+;---------------------------------------------------
+
 

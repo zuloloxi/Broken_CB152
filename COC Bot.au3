@@ -3,10 +3,10 @@
 #pragma compile(Icon, "Icons\cocbot.ico")
 #pragma compile(FileDescription, Clash of Clans Bot - Modification of A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
 #pragma compile(ProductName, Clash of Clans Bot)
-#pragma compile(ProductVersion, 1.1)
-#pragma compile(FileVersion, 1.1)
+#pragma compile(ProductVersion, 1.2)
+#pragma compile(FileVersion, 1.2)
 
-$sBotVersion = "1.1"
+$sBotVersion = "1.2"
 $sBotTitle = "AutoIt Unbroken ClashBot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
@@ -41,7 +41,6 @@ DirCreate($dirConfigs)
 $sTimer = TimerInit()
 AdlibRegister("SetTime", 1000)
 
-If $firstrun Then checkupdate()
 
 While 1
 	Switch TrayGetMsg()
@@ -182,16 +181,14 @@ Func runBot() ;Bot that runs everything in order
 		If _Sleep(1000) Then Return
 		checkMainScreen(False)
 		Pause()
-		If $Restart = True Then ContinueLoop
-		UpgradeToBuilding1()
-		UpgradeToBuilding2()
-		UpgradeToBuilding3()
-		UpgradeToBuilding4()
-		UpgradeToBuilding5()
-		UpgradeToBuilding6()
+		;If $Restart = True Then ContinueLoop
+		SetLog("Running building upgrade", $COLOR_BLUE)
+		If _Sleep(1000) Then Return
+		UpgradeBuilding()
 		If _Sleep(1000) Then Return
 		checkMainScreen(False)
-		If $Restart = True Then ContinueLoop
+		;If $Restart = True Then ContinueLoop
+		If _Sleep(1000) Then Return
 		UpgradeWall()
 		Pause()
 		If _Sleep(1000) Then Return
@@ -225,6 +222,15 @@ Func runBot() ;Bot that runs everything in order
 				Pause()
 				If _Sleep(1000) Then Return
 				$fullArmy = False
+			EndIf
+		EndIf
+		If GUICtrlRead($chkStayAlive) = $GUI_CHECKED Then
+			If $shift Then
+				$shift = False
+				MouseMove(MouseGetPos(0)+1, MouseGetPos(1))
+			Else
+				$shift = True
+				MouseMove(MouseGetPos(0)-1, MouseGetPos(1))
 			EndIf
 		EndIf
 		Pause()
@@ -278,6 +284,15 @@ Func Idle() ;Sequence that runs until Full Army
 			If _Sleep(1000) Then ExitLoop
 		EndIf
 		DonateCC()
+		If GUICtrlRead($chkStayAlive) = $GUI_CHECKED Then
+			If $shift Then
+				$shift = False
+				MouseMove(MouseGetPos(0)+1, MouseGetPos(1))
+			Else
+				$shift = True
+				MouseMove(MouseGetPos(0)-1, MouseGetPos(1))
+			EndIf
+		EndIf
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
 		SetLog("Time Idle: " & Floor(Floor($TimeIdle / 60) / 60) & " hours " & Floor(Mod(Floor($TimeIdle / 60), 60)) & " minutes " & Floor(Mod($TimeIdle, 60)) & " seconds", $COLOR_ORANGE)
 	WEnd
@@ -303,19 +318,21 @@ EndFunc   ;==>AttackMain
 
 Func Attack() ;Selects which algorithm
 	SetLog("======Beginning Attack======")
-	;	Switch $attackpattern
-	;		Case 0 ; v5.5
-	;			SetLog("Attacking with v5.5 attacking Algorithm")
-	;			algorithm_Troops()
-	;		Case 1 ; v5.6
-	;			SetLog("Attacking with v5.6 attacking Algorithm")
 	algorithm_AllTroops()
-	;	EndSwitch
 EndFunc   ;==>Attack
 
 Func Pause()
 	While $PauseBot
 		If _Sleep(1000) Then Return
+		If GUICtrlRead($chkStayAlive) = $GUI_CHECKED Then
+			If $shift Then
+				$shift = False
+				MouseMove(MouseGetPos(0)+1, MouseGetPos(1))
+			Else
+				$shift = True
+				MouseMove(MouseGetPos(0)-1, MouseGetPos(1))
+			EndIf
+		EndIf
 	WEnd
 EndFunc   ;==>Pause
 
