@@ -24,6 +24,13 @@ EndFunc   ;==>_ColorCheck
 
 ; CheckPixel : takes an array[4] as a parameter, [x, y, color, tolerance]
 Func CheckPixel($tab)
-	If _ColorCheck(_GetPixelColor($tab[0], $tab[1]), Hex($tab[2], 6), $tab[3]) Then Return True
-	Return False;
+	If _ColorCheck(_GetPixelColor($tab[0], $tab[1]), Hex($tab[2], 6), $tab[3]) Then
+		Return True
+	Else
+		SetLog("Location- X:"&$tab[0] & " Y:" & $tab[1], $COLOR_RED)
+		SetLog("Wanted:" & _GetPixelColor($tab[0], $tab[1]), $COLOR_RED)
+		SetLog("Got:" & Hex($tab[2], 6), $COLOR_RED)
+		SetLog("Variance:" & $tab[3], $COLOR_RED)
+		Return False
+	EndIf
 EndFunc   ;==>CheckPixel

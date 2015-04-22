@@ -20,6 +20,9 @@ config.ini
 Thumbs.db
 ehthumbs.db
 
+# Autoit BAK file
+*.bak
+
 # Folder config file
 Desktop.ini
 
