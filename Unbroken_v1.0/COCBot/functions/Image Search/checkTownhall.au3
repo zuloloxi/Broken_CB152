@@ -14,7 +14,7 @@ Func checkTownhall()
 					EndIf
 				EndIf
 				If $THLocation = 1 Then
-					If $DebugMode = 10 Then ;temp disable debug
+					If $DebugMode = 1 Then
 						$hClone = _GDIPlus_BitmapCloneArea($hBitmap, $THx - 30, $THy - 30, 60, 60, _GDIPlus_ImageGetPixelFormat($hBitmap))
 						$j = 1
 						Do
@@ -31,8 +31,7 @@ Func checkTownhall()
 		$bumpTolerance += 5
 	Until $bumpTolerance > 80
 	If $THLocation = 0 Then
-		; temp disable debug
-		If $DebugMode = 10 Then _GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "NegTH-" & @HOUR & @MIN & @SEC & ".png")
+		If $DebugMode = 1 Then _GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "NegTH-" & @HOUR & @MIN & @SEC & ".png")
 		Return "-"
 	EndIf
 EndFunc   ;==>checkTownhall
