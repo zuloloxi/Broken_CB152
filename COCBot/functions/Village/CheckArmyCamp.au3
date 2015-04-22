@@ -9,12 +9,12 @@ Func CheckArmyCamp()
 		LocateCamp()
 		SaveConfig()
 	Else
-		If _Sleep(100) Then Return
+		If _Sleep(1000) Then Return
 		Click($ArmyPos[0], $ArmyPos[1]) ;Click Army Camp
 	EndIf
 
 	_CaptureRegion()
-	If _Sleep(500) Then Return
+	If _Sleep(1000) Then Return
 	Local $BArmyPos = _PixelSearch(309, 581, 433, 583, Hex(0x4084B8, 6), 5) ;Finds Info button
 	If IsArray($BArmyPos) = False Then
 		SetLog("Your Army Camp is not available", $COLOR_RED)
