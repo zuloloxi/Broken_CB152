@@ -13,3 +13,5 @@ https://docs.pushbullet.com/
 curl can be find in below location
 
 http://curl.haxx.se/download.html
+
+Issues isn't the best place for having a real conversation.  I've started up a chatroom (no registration required): http://www.e-chat.co/room/77641
