@@ -12,7 +12,7 @@ For your convenience, and referring to pushbullet's document:
 https://docs.pushbullet.com/
 
 ### Community
-Issues isn't the best place for having a real conversation.  I've started up a chatroom (no registration required): http://www.e-chat.co/room/77641
+Forums available for discussion at: http://brokenbot.org/
 
 ### Credit
 Much thanks to: the original creators of this bot at clashbot.org, cool7su, maxcom, msh2050, usabug, cmestres, and anyone else who I missed but has contributed to this great project!
