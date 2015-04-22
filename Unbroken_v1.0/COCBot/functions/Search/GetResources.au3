@@ -13,9 +13,14 @@ Func GetResources() ;Reads resources
 			If $i >= 20 Then ; If gold cannot be read by 10 seconds
 				If checkNextButton() And $x <= 20 Then ;Checks for Out of Sync or Connection Error during search
 					Click(750, 500) ;Click Next
-					$x += 1
+					If _Sleep(1000) Then ExitLoop
+				$x += 1
 				Else
 					SetLog("Cannot locate Next button, Restarting Bot", $COLOR_RED)
+					If $DebugMode = 1 Then
+						_CaptureRegion()
+						_GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "NoNextRes-" & @HOUR & @MIN & @SEC & ".png")
+					EndIf
 					If $PushBulletEnabled = 1 Then
 						_Push("Disconnected", "Your bot got disconnected while searching for enemy..")
 					EndIf
