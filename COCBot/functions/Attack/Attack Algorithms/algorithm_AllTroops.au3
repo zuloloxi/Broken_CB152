@@ -400,7 +400,7 @@ Func DropOnEdges($troop, $nbSides, $number, $slotsPerEdge = 0, $miniEdge = False
 	EndIf
 EndFunc   ;==>DropOnEdges
 
-Func LauchTroop($troopKind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0, $miniEdge = False)
+Func LaunchTroop($troopKind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0, $miniEdge = False)
 	Local $troop = -1
 	Local $troopNb = 0
 	Local $name = ""
@@ -427,7 +427,7 @@ Func LauchTroop($troopKind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0, $m
 	SetLog("Dropping " & $waveName & " wave of " & $troopNb & " " & $name, $COLOR_BLUE)
 	DropOnEdges($troop, $nbSides, $troopNb, $slotsPerEdge, $miniEdge)
 	Return True
-EndFunc   ;==>LauchTroop
+EndFunc   ;==>LaunchTroop
 
 Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 
@@ -477,6 +477,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 
 		If _Sleep(2000) Then Return
 		Local $nbSides = 0
+		Local $mixedMode = False
 
 		$attackTH = ($searchDead) ? $icmbDeadAttackTH : $icmbAttackTH
 		Local $OuterQuad
@@ -501,6 +502,10 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 					Case 3 ;Four sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						SetLog("~Attacking in all sides...")
 						$nbSides = 4
+					Case 4
+						SetLog("~Mixed Mode Attacking...")
+						$nbSides = 4
+						$mixedMode = True
 				EndSwitch
 			Else
 				Switch $deploySettings
@@ -516,6 +521,10 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 					Case 3 ;Four sides ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 						SetLog("~Attacking in all sides...")
 						$nbSides = 4
+					Case 4
+						SetLog("~Mixed Mode Attacking...")
+						$nbSides = 4
+						$mixedMode = True
 				EndSwitch
 			EndIf
 			If ($OuterQuad And $attackTH = 1) Then SetLog("~With limited Townhall attack...")
@@ -527,38 +536,46 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		; ========= Here is coded the main attack strategy ===============================
 		; ========= Feel free to experiment something else ===============================
 		; ================================================================================?
-		If LauchTroop($eGiant, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+		If LaunchTroop($eGiant, (($mixedMode) ? 1 : $nbSides), 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eHog, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+		If LaunchTroop($eHog, (($mixedMode) ? 1 : $nbSides), 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-	    	If LauchTroop($eValkyrie, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+		If Not $mixedMode Then
+			If LaunchTroop($eValkyrie, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+		EndIf
+		If LaunchTroop($eBarbarian, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eBarbarian, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
+		If LaunchTroop($eWallbreaker, (($mixedMode) ? 1 : $nbSides), 1, (($mixedMode) ? 3 : 1), 1, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eWallbreaker, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+		If LaunchTroop($eArcher, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eArcher, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
+		If LaunchTroop($eBarbarian, (($mixedMode) ? 1 : $nbSides), 2, 2, 0, ($OuterQuad And $attackTH >= 1)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eBarbarian, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH >= 1)) Then
+		If LaunchTroop($eGoblin, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
-		If LauchTroop($eGoblin, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
-			If _Sleep(SetSleep(1)) Then Return
-		EndIf
-		If LauchTroop($eArcher, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH >= 1)) Then
-			If _Sleep(SetSleep(1)) Then Return
-		EndIf
-		If LauchTroop($eGoblin, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH = 2)) Then
-			If _Sleep(SetSleep(1)) Then Return
-		EndIf
-		If LauchTroop($eMinion, $nbSides, 1, 1, 0, ($OuterQuad And $attackTH = 2)) Then
-			If _Sleep(SetSleep(1)) Then Return
+		If $mixedMode Then
+			If LaunchTroop($eWallbreaker, 1, 2, 3, 1) Then
+				If _Sleep(SetSleep(1), False) Then Return
+			EndIf
+		Else
+			If LaunchTroop($eArcher, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH >= 1)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If LaunchTroop($eGoblin, $nbSides, 2, 2, 0, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If LaunchTroop($eMinion, $nbSides, 1, 1, 0, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
 		EndIf
 		; ================================================================================?
 
@@ -608,7 +625,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			EndSwitch
 			dropCC($DropX, $DropY, $CC, $AimTH)
 			If _Sleep(100) Then Return
-			dropHeroes($DropX, $DropY, $King, $Queen, $AimTH)
+			If Not $mixedMode Then dropHeroes($DropX, $DropY, $King, $Queen, $AimTH)
 		Else
 			If $nbSides = 1 Then
 				dropCC($BottomRight[3][0], $BottomRight[3][1], $CC)
@@ -616,10 +633,36 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 				dropCC($TopLeft[3][0], $TopLeft[3][1], $CC)
 			EndIf
 			If _Sleep(100) Then Return
-			If $nbSides = 1 Then
-				dropHeroes($BottomRight[3][0], $BottomRight[3][1], $King, $Queen)
+			If Not $mixedMode Then
+				If $nbSides = 1 Then
+					dropHeroes($BottomRight[3][0], $BottomRight[3][1], $King, $Queen)
+				Else
+					dropHeroes($TopLeft[3][0], $TopLeft[3][1], $King, $Queen)
+				EndIf
+			EndIf
+		EndIf
+
+		If $mixedMode Then
+			If LaunchTroop($eValkyrie, 1, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If LaunchTroop($eArcher, 1, 2, 2, 0, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If LaunchTroop($eGoblin, 1, 2, 2, 0, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If LaunchTroop($eMinion, 1, 1, 1, 0, ($OuterQuad And $attackTH = 2)) Then
+				If _Sleep(SetSleep(1)) Then Return
+			EndIf
+			If _Sleep(100) Then Return
+			If ($OuterQuad And $attackTH = 2) Then
+				dropHeroes($DropX, $DropY, $King, $Queen, $AimTH)
 			Else
-				dropHeroes($TopLeft[3][0], $TopLeft[3][1], $King, $Queen)
+				dropHeroes($BottomRight[3][0], $BottomRight[3][1], $King, $Queen)
+			EndIf
+			If LaunchTroop($eWallbreaker, 1, 3, 3, 1) Then
+				If _Sleep(SetSleep(1), False) Then Return
 			EndIf
 		EndIf
 
@@ -637,9 +680,9 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			PrepareAttack(True) ;Check remaining quantities
 			For $i = $eBarbarian To $eMinion ; lauch all remaining troops
 				If $i = $eBarbarian Or $i = $eArcher Or $i = $eMinion Or $i = $eHog Or $i = $eValkyrie Then
-					LauchTroop($i, $nbSides, 0, 1)
+					LaunchTroop($i, (($mixedMode) ? 1 : $nbSides), 0, 1)
 				Else
-					If $i <> $eLSpell then LauchTroop($i, $nbSides, 0, 1, 2)
+					If $i <> $eLSpell then LaunchTroop($i, $nbSides, 0, 1, 2)
 				EndIf
 				If _Sleep(500) Then Return
 			Next

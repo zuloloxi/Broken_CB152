@@ -37,7 +37,8 @@ Global $TrainGiant[4] = [475, 366, 0x3DD8E0, 20] ;
 Global $TrainGoblin[4] = [581, 366, 0x39D8E0, 20] ;
 Global $TrainWallbreaker[4] = [688, 366, 0x3AD8E0, 20] ;
 
-Global $TrainMinion[4]				= [261, 365, 0x43D9E2, 10] ;
+Global $TrainMinion[4]				= [261, 365, 0x43D9E2, 28] ;
+;Global $TrainMinion[4]				= [261, 365, 0x5DDCE5, 10] ;
 Global $TrainHog[4]				= [369, 366, 0x39CBDA, 10] ;
 Global $TrainValkyrie[4] 			= [475, 365, 0x3CD8E0, 10] ;
 

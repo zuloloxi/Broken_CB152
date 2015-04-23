@@ -44,6 +44,7 @@ Func TrainDark()
 
 ;Dark Barrack 1
 			If GUICtrlRead($txtDarkBarrack1) <> "0" And $i = 0 And $TrainDrax1 = True Then
+				$itxtDarkBarrack1 = GUICtrlRead($txtDarkBarrack1)
 				If $DarkBarrackTroop[$i] = 0 Then
 					Local $troopMinion = Number(getOther(171 + 107 * 0, 278, "Barrack"))
 					If $itxtDarkBarrack1 <= 20 And ($fullArmy Or $FirstDarkTrain) Then
@@ -134,6 +135,7 @@ Func TrainDark()
 
 ;Dark Barrack 2
 			If GUICtrlRead($txtDarkBarrack2) <> "0" And $i = 1 And $TrainDrax2 = True Then
+				$itxtDarkBarrack1 = GUICtrlRead($txtDarkBarrack1)
 				If $DarkBarrackTroop[$i] = 0 Then
 					Local $troopMinion2 = Number(getOther(171 + 107 * 0, 278, "Barrack"))
 					If $itxtDarkBarrack2 <= 20 And ($fullArmy Or $FirstDarkTrain) Then

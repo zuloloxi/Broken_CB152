@@ -12,10 +12,10 @@ Func DonateCC()
 	SetLog("Donating Troops", $COLOR_BLUE)
 
 	_CaptureRegion()
-	If _ColorCheck(_GetPixelColor(34, 321), Hex(0xE00300, 6), 20) = False And $CommandStop <> 3 Then
-		SetLog("No new chats, skip donating", $COLOR_ORANGE)
-		Return
-	EndIf
+	;If _ColorCheck(_GetPixelColor(34, 321), Hex(0xE00300, 6), 20) = False And $CommandStop <> 3 Then
+	;	SetLog("No new chats, skip donating", $COLOR_ORANGE)
+	;	Return
+	;EndIf
 
 	Click(1, 1) ;Click Away
 	If _ColorCheck(_GetPixelColor(331, 330), Hex(0xF0A03B, 6), 20) = False Then Click(19, 349) ;Clicks chat thing
@@ -26,7 +26,7 @@ Func DonateCC()
 		Local $offColors[3][3] = [[0x000000, 0, -2], [0x262926, 0, 1], [0xF8FCF0, 0, 11]]
 		While 1
 			If _Sleep(1000) Then ExitLoop
-			Global $DonatePixel = _MultiPixelSearch(202, $y, 203, 670, 1, 1, Hex(0x262926, 6), $offColors, 20)
+			Global $DonatePixel = _MultiPixelSearch(202, $y, 203, 670, 1, 1, Hex(0x262926, 6), $offColors, 30)
 			If IsArray($DonatePixel) Then
 				;SetLog("$DonatePixel        x: " & $DonatePixel[0] & "    y: " & $DonatePixel[1], $COLOR_GREEN) ; for debugging
 				$Donate = False

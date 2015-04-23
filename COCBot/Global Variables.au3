@@ -56,6 +56,7 @@ Global $TakeLootSnapShot = True
 Global $TakeAllTownSnapShot = False
 Global $TakeAttackSnapShot = 0
 Global $DebugMode = 0
+Global $shift
 Global $ReqText
 Global $brerror[4]
 $brerror[0] = False
