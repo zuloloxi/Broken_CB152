@@ -17,8 +17,21 @@ Func GetResources() ;Reads resources
 				$x += 1
 				Else
 					SetLog("Cannot locate Next button, Restarting Bot", $COLOR_RED)
+					_CaptureRegion()
+					Local $dummyX = 0
+					Local $dummyY = 0
+					If _ImageSearch(@ScriptDir & "\images\Client.bmp", 1, $dummyX, $dummyY, 50) = 1 Then
+						If $dummyX > 165 and $dummyX < 180 and $dummyY > 325 and $dummyY < 340 Then
+							$speedBump += 500
+							If $speedBump > 5000 Then
+								$speedBump=5000
+								SetLog("Out of sync! Already searching slowly, not changing anything.", $COLOR_RED)
+							Else
+								SetLog("Out of sync! Slowing search speed by 0.5 secs.", $COLOR_RED)
+							EndIf
+						EndIf
+					EndIf
 					If $DebugMode = 1 Then
-						_CaptureRegion()
 						_GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "NoNextRes-" & @HOUR & @MIN & @SEC & ".png")
 					EndIf
 					If $PushBulletEnabled = 1 Then
@@ -33,6 +46,7 @@ Func GetResources() ;Reads resources
 			EndIf
 		WEnd
 		If _Sleep(300) Then ExitLoop (2)
+		If _Sleep($speedBump) Then ExitLoop(2)
 
 		$searchDead = checkDeadBase()
 		$searchTH = checkTownhall()
