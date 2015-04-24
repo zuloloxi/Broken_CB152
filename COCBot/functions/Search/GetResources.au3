@@ -21,7 +21,7 @@ Func GetResources() ;Reads resources
 					Local $dummyX = 0
 					Local $dummyY = 0
 					If _ImageSearch(@ScriptDir & "\images\Client.bmp", 1, $dummyX, $dummyY, 50) = 1 Then
-						If $dummyX > 165 and $dummyX < 180 and $dummyY > 325 and $dummyY < 340 Then
+						If $dummyX > 290 and $dummyX < 310 and $dummyY > 325 and $dummyY < 340 Then
 							$speedBump += 500
 							If $speedBump > 5000 Then
 								$speedBump=5000

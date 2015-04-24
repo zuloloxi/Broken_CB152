@@ -50,7 +50,7 @@ Func VillageSearch($TakeSS = 0) ;Control for searching a village that meets cond
 		If GUICtrlRead($chkAnyActivate) = $GUI_CHECKED And $fullArmy Then
 			$conditionlogstr = "Live Base ("
 			If GUICtrlRead($chkMeetGE) = $GUI_CHECKED Then
-				If _GUICtrlComboBox_GetCurSel($cmbDead) = 0 Then
+				If _GUICtrlComboBox_GetCurSel($cmbAny) = 0 Then
 					$conditionlogstr = $conditionlogstr & " Gold: " & $MinGold & " And " & "Elixir: " & $MinElixir
 				Else
 					$conditionlogstr = $conditionlogstr & " Gold: " & $MinGold & " Or " & "Elixir: " & $MinElixir

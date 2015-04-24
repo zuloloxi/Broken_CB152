@@ -3,10 +3,10 @@
 #pragma compile(Icon, "Icons\cocbot.ico")
 #pragma compile(FileDescription, Clash of Clans Bot - Modification of A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
 #pragma compile(ProductName, Clash of Clans Bot)
-#pragma compile(ProductVersion, 1.4)
-#pragma compile(FileVersion, 1.4)
+#pragma compile(ProductVersion, 1.5)
+#pragma compile(FileVersion, 1.5)
 
-$sBotVersion = "1.4"
+$sBotVersion = "1.5"
 $sBotTitle = "AutoIt Unbroken ClashBot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
@@ -30,6 +30,7 @@ EndIf
 #include "COCBot\GUI Control.au3"
 #include "COCBot\Functions.au3"
 #include-once
+HotKeySet("^!+p", "_ScreenShot")
 
 DirCreate($dirLogs)
 DirCreate($dirLoots)
@@ -357,3 +358,12 @@ Func loot_log_cleanup($no_rotator)
 		endif
 	Next
 EndFunc
+
+Func _ScreenShot()
+	Local $Date = @MDAY & "." & @MON & "." & @YEAR
+	Local $Time = @HOUR & "." & @MIN & "." & @SEC
+	_CaptureRegion()
+	SetLog($dirDebug & "ScreenShot-" & $Date & " at " & $Time & ".png")
+	_GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "ScreenShot-" & $Date & " at " & $Time & ".png")
+EndFunc
+
