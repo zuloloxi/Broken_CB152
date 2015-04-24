@@ -144,6 +144,8 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					GUISetState(@SW_ENABLE, $frmBot)
 					GUISetState(@SW_HIDE, $frmBugReport)
 					WinActivate($frmBot)
+				Case $imgLogo
+					openWebsite()
 			EndSwitch
 		Case 274
 			Switch $wParam
@@ -1210,6 +1212,10 @@ Func btnBugRep()
 	GUISetState(@SW_DISABLE, $frmBot)
 	GUISetState(@SW_SHOW, $frmBugReport)
 
+EndFunc
+
+func openWebsite()
+	ShellExecute("http://www.brokenbot.org") 
 EndFunc
 
 ;---------------------------------------------------
