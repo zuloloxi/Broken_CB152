@@ -1,10 +1,14 @@
-$frmAttackConfig = GUICreate("Attack config panel", 410, 410, -1, -1, $WS_BORDER + $WS_POPUP, $WS_EX_MDICHILD, $frmBot)
-Opt('GUIResizeMode', 802)
+GUISwitch($frmAttackConfig)
+; Line above required
 
-$cmbAttackStrat = GUICtrlCreateCombo("", 10, 5, 415, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-GUICtrlSetData(-1, "Standard farming strategy|To be added later", "Standard farming strategy")
+; Name your strategy
+$StratComboText = "Standard farming strategies"
+; List the number of tabs you are using
+$StratTabs = "4"
 
-$tabStrat = GUICtrlCreateTab(10, 35, 415, 410)
+; Format necessary for plugins:
+; $StratComboText = $StratComboText & "|Plugin name"
+; $StratTabs = $StratTabs & "|" & "# of tabs"
 
 $pageSearch = GUICtrlCreateTabItem("Search Settings")
 $DeadConditions = GUICtrlCreateGroup("Dead Base Conditions", 18, 65, 397, 135)
@@ -243,5 +247,3 @@ GUICtrlSetTip(-1, "It's going to find a damn DE storage, even if it means nuking
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 GUICtrlCreateTabItem("")
-
-GUISetState(@SW_HIDE, $frmAttackConfig)

@@ -459,6 +459,7 @@ $tiAbout = TrayCreateItem("About")
 TrayCreateItem("")
 $tiExit = TrayCreateItem("Exit")
 
+;-----------------------------------------------------------------------------
 $frmBugReport = GUICreate("Bug report info", 400, 425, -1, -1, $DS_MODALFRAME, -1, $frmBot)
 $lblInstructions = GUICtrlCreateLabel("Please review issues on GitHub and create new issue if needed. The better the description of the problem the easier it is to actually fix. Your recent log information and settings are included below if you need to copy and paste this info into the issue.", 20, 10, 360, 60)
 $lblLog = GUICtrlCreateLabel("Last 100 log lines:", 20, 70, 220, 18)
@@ -467,3 +468,13 @@ $lblSettings = GUICtrlCreateLabel("Settings:", 20, 215, 150, 18)
 $inpSettings = GUICtrlCreateEdit("", 20, 235, 360, 120, $WS_VSCROLL + $ES_MULTILINE + $ES_READONLY)
 $btnGitHub = GUICtrlCreateButton("Open GitHub", 20, 365, 170, 25)
 $btnCloseBR = GUICtrlCreateButton("Close", 210, 365, 170, 25)
+
+;-----------------------------------------------------------------------------
+$frmAttackConfig = GUICreate("Attack config panel", 410, 410, -1, -1, $WS_BORDER + $WS_POPUP, $WS_EX_MDICHILD, $frmBot)
+Opt('GUIResizeMode', 802)
+
+$cmbAttackStrat = GUICtrlCreateCombo("", 10, 5, 415, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+GUICtrlSetData(-1, "", "")
+$tabStrat = GUICtrlCreateTab(10, 35, 415, 410)
+GUICtrlCreateTabItem("")
+GUISetState(@SW_HIDE, $frmAttackConfig)

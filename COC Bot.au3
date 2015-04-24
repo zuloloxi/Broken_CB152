@@ -3,10 +3,10 @@
 #pragma compile(Icon, "Icons\cocbot.ico")
 #pragma compile(FileDescription, UnBroken Clash of Clans Bot)
 #pragma compile(ProductName, Clash of Clans Bot)
-#pragma compile(ProductVersion, 1.5)
-#pragma compile(FileVersion, 1.5)
+#pragma compile(ProductVersion, 2.0)
+#pragma compile(FileVersion, 2.0)
 
-$sBotVersion = "1.5"
+$sBotVersion = "2.0"
 $sBotTitle = "UnBroken COC Bot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
@@ -27,10 +27,10 @@ EndIf
 
 #include "COCBot\Global Variables.au3"
 #include "COCBot\GUI Design.au3"
-#include "COCBot\AttackStratGUI.au3"
-#include "COCBot\GUI Control.au3"
 #include "COCBot\Functions.au3"
+#include "COCBot\GUI Control.au3"
 #include-once
+
 HotKeySet("^!+p", "_ScreenShot")
 
 DirCreate($dirLogs)
@@ -116,6 +116,9 @@ Func runBot() ;Bot that runs everything in order
 			If _Sleep(1000) Then Return
 			If $ichkMakeSpells = 1 Then
 				CheckSpellFactory()
+				If Not $fullSpellFactory Then
+					MakeSpells()
+				EndIf
 			EndIf
 			If _Sleep(1000) Then Return
 		EndIf

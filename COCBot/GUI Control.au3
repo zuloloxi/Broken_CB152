@@ -146,6 +146,8 @@ Func GUIControl($hWind, $iMsg, $wParam, $lParam)
 					WinActivate($frmBot)
 				Case $imgLogo
 					openWebsite()
+				Case $cmbAttackStrat
+					cmbAttackStrat()
 			EndSwitch
 		Case 274
 			Switch $wParam
@@ -1225,7 +1227,7 @@ Func btnBugRep()
 EndFunc
 
 func openWebsite()
-	ShellExecute("http://www.brokenbot.org") 
+	ShellExecute("http://www.brokenbot.org")
 EndFunc
 
 Func _WinMoved($hWndGUI, $MsgID, $WParam, $LParam)
@@ -1242,6 +1244,14 @@ Func _WinMoved($hWndGUI, $MsgID, $WParam, $LParam)
 		$slideIn = 0x00050001
 	EndIf
 EndFunc
+
+Func cmbAttackStrat()
+; Work in progress
+; Want it to only show tabs for current strategy
+
+EndFunc   ;==>cmbSpellCreate
+
+
 
 ;---------------------------------------------------
 If FileExists($config) Then

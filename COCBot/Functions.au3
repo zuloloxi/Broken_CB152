@@ -4,9 +4,6 @@
 #include "functions\Attack\PrepareAttack.au3"
 #include "functions\Attack\ReturnHome.au3"
 #include "functions\Attack\NameOfTroop.au3"
-#include "functions\Attack\Attack Algorithms\algorithmTH.au3"
-#include "functions\Attack\Attack Algorithms\algorithm_AllTroops.au3"
-#include "functions\Attack\Attack Algorithms\algorithm_Barch.au3"
 
 #include "functions\Config\applyConfig.au3"
 #include "functions\Config\readConfig.au3"
@@ -62,15 +59,14 @@
 #include "functions\Read Text\getDigitTH.au3"
 
 #include "functions\Search\checkNextButton.au3"
-#include "functions\Search\CompareResources.au3"
 #include "functions\Search\GetResources.au3"
 #include "functions\Search\PrepareSearch.au3"
-#include "functions\Search\VillageSearch.au3"
+
+#include "functions\Strategies\strategies.au3"
 
 #include "functions\Village\BoostAllBuilding.au3"
 #include "functions\Village\CheckFullArmy.au3"
-#include "functions\Village\CheckArmyCamp.au3"
-#include "functions\Village\CheckSpellFactory.au3"
+#include "functions\Village\CheckFullSpellFactory.au3"
 #include "functions\Village\Collect.au3"
 #include "functions\Village\DonateCC.au3"
 #include "functions\Village\DropTrophy.au3"
@@ -79,7 +75,6 @@
 #include "functions\Village\LocateBuildings.au3"
 #include "functions\Village\ReArm.au3"
 #include "functions\Village\RequestCC.au3"
-#include "functions\Village\Train.au3"
 #include "functions\Village\BotCommand.au3"
 #include "functions\Village\UpgradeWall.au3"
 #include "functions\Village\UpgradeBuilding.au3"
@@ -87,4 +82,3 @@
 #include "functions\Village\CheckCostPerSearch.au3"
 
 #include "functions\Notification\PushBullet.au3"
-#include "functions\Village\TrainDark.au3"

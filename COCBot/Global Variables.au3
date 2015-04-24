@@ -46,6 +46,7 @@ Global $dirDebug = @ScriptDir & "\Debug\"
 Global $dirAllTowns = @ScriptDir & "\AllTowns\"
 Global $dirConfigs = @ScriptDir & "\config\"
 Global $config = @ScriptDir & "\config\default.ini"
+
 Global $sLogPath ; `Will create a new log file every time the start button is pressed
 Global $hLogFileHandle
 Global $Restart = False
@@ -90,6 +91,8 @@ $THText[3] = "9"
 $THText[4] = "10"
 Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
+Global $StratComboText = ""
+Global $StratTabs = ""
 
 Global $speedBump = 0
 Global $prevTab = 0
