@@ -30,6 +30,7 @@ EndIf
 #include "COCBot\GUI Control.au3"
 #include "COCBot\Functions.au3"
 #include-once
+HotKeySet("^!+p", "_ScreenShot")
 
 DirCreate($dirLogs)
 DirCreate($dirLoots)
@@ -357,3 +358,12 @@ Func loot_log_cleanup($no_rotator)
 		endif
 	Next
 EndFunc
+
+Func _ScreenShot()
+	Local $Date = @MDAY & "." & @MON & "." & @YEAR
+	Local $Time = @HOUR & "." & @MIN & "." & @SEC
+	_CaptureRegion()
+	SetLog($dirDebug & "ScreenShot-" & $Date & " at " & $Time & ".png")
+	_GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "ScreenShot-" & $Date & " at " & $Time & ".png")
+EndFunc
+
