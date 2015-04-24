@@ -336,7 +336,11 @@ Func applyConfig() ;Applies the data from config to the controls in GUI
 	EndIf
 
 	;General Settings--------------------------------------------------------------------------
-	If $frmBotPosX <> -32000 Then WinMove($sBotTitle, "", $frmBotPosX, $frmBotPosY)
+	If $frmBotPosX <> -32000 Then
+		WinMove($sBotTitle, "", $frmBotPosX, $frmBotPosY)
+		_WinMoved(0, 0, 0, 0)
+	EndIf
+	GUISetState(@SW_SHOW, $frmBot)
 	GUICtrlSetData($txtMinimumTrophy, $itxtMinTrophy)
 	GUICtrlSetData($txtMaxTrophy, $itxtMaxTrophy)
 	;Misc Settings--------------------------------------------------------------------------

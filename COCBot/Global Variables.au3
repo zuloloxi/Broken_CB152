@@ -92,6 +92,9 @@ Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 
 Global $speedBump = 0
+Global $prevTab = 0
+Global $slideOut = 0
+Global $slideIn = 0
 
 ;Troop types
 Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell

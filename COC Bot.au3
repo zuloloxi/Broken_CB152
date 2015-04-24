@@ -1,13 +1,13 @@
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=n
 #pragma compile(Icon, "Icons\cocbot.ico")
-#pragma compile(FileDescription, Clash of Clans Bot - Modification of A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
+#pragma compile(FileDescription, UnBroken Clash of Clans Bot)
 #pragma compile(ProductName, Clash of Clans Bot)
 #pragma compile(ProductVersion, 1.5)
 #pragma compile(FileVersion, 1.5)
 
 $sBotVersion = "1.5"
-$sBotTitle = "AutoIt Unbroken ClashBot v" & $sBotVersion
+$sBotTitle = "UnBroken COC Bot v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, "", "Bot is already running.")
@@ -27,6 +27,7 @@ EndIf
 
 #include "COCBot\Global Variables.au3"
 #include "COCBot\GUI Design.au3"
+#include "COCBot\AttackStratGUI.au3"
 #include "COCBot\GUI Control.au3"
 #include "COCBot\Functions.au3"
 #include-once

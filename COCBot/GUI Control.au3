@@ -955,6 +955,16 @@ Func tabMain()
 	Else
 		ControlHide("", "", $txtLog)
 	EndIf
+	If _GUICtrlTab_GetCurSel($tabMain) = 1 Then
+		GUISetState(@SW_HIDE, $frmAttackConfig)
+		DllCall("user32.dll", "int", "AnimateWindow", "hwnd", $frmAttackConfig, "int", 500, "long", $slideOut)
+		GUISetState(@SW_SHOW, $frmAttackConfig)
+		GUICtrlSetState($pageSearch, $GUI_SHOW)
+	ElseIf $prevTab = 1 Then
+		DllCall("user32.dll", "int", "AnimateWindow", "hwnd", $frmAttackConfig, "int", 500, "long", $slideIn)
+		GUISetState(@SW_HIDE, $frmAttackConfig)
+	EndIf
+	$prevTab = _GUICtrlTab_GetCurSel($tabMain)
 EndFunc   ;==>tabMain
 
 Func DisableBS($HWnD, $iButton)
@@ -1218,6 +1228,21 @@ func openWebsite()
 	ShellExecute("http://www.brokenbot.org") 
 EndFunc
 
+Func _WinMoved($hWndGUI, $MsgID, $WParam, $LParam)
+	$curWinLoc=WinGetPos($frmBot)
+	If ($curWinLoc[0]+208) < (@DesktopWidth/2) Then
+		; On left side of screen
+		WinMove($frmAttackConfig, "", $curWinLoc[0]+426, $curWinLoc[1], 435, $curWinLoc[3])
+		$slideOut = 0x00040001
+		$slideIn = 0x00050002
+	Else
+		; On right side of screen
+		WinMove($frmAttackConfig, "", $curWinLoc[0]-439, $curWinLoc[1], 435, $curWinLoc[3])
+		$slideOut =0x00040002
+		$slideIn = 0x00050001
+	EndIf
+EndFunc
+
 ;---------------------------------------------------
 If FileExists($config) Then
 	readConfig()
@@ -1227,6 +1252,7 @@ checkupdate()
 
 GUIRegisterMsg($WM_COMMAND, "GUIControl")
 GUIRegisterMsg($WM_SYSCOMMAND, "GUIControl")
+GUIRegisterMsg(0x0003, "_WinMoved")
 ;---------------------------------------------------
 
 
