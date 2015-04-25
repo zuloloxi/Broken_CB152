@@ -112,7 +112,7 @@ Func Click($x, $y, $times = 1, $speed = 0, $CenteredOn = 0, $BufferDist = 20)
 			Next
 			; Now we are sitting right on top of the edge so let's move back a bit
 			$m = ($AimY - $y)/($AimX - $x)
-			$Dist = _Random_Gaussian($BufferDist,3)
+			$Dist = _Random_Gaussian($BufferDist,2)
 			$deltaX = (($Dist^2)/(1+$m^2))^.5
 			If $AimX > $x Then $deltaX=$deltaX*-1
 			If Abs($x-$AimX) < Abs($deltaX) Then
