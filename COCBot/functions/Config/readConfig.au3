@@ -79,6 +79,14 @@ Func readConfig() ;Reads config and sets it to the variables
 		$icmbWaveDelay = IniRead($config, "other", "WaveD", "0")
 		$iRandomspeedatk = IniRead($config, "other", "randomatk", "0")
 
+		;Custom Troop 2 Settings--------------------------------------------------------------------------
+
+		For $i = 0 To 3 ;Covers all 4 Barracks
+			$itxtFirstTroop[$i] = IniRead($config, "troop", "CustomRax" & $i + 1, "0")
+			$CustomTroopF[$i] = IniRead($config, "troop", "CustomtroopF" & $i + 1, "0")
+			$CustomTroopS[$i] = IniRead($config, "troop", "CustomtroopS" & $i + 1, "0")
+		Next
+
 		;Other Settings--------------------------------------------------------------------------
 		;Walls
 		$ichkWalls = IniRead($config, "other", "auto-wall", "0")
