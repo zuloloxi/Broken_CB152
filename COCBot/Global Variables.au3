@@ -91,7 +91,9 @@ $THText[4] = "10"
 Global $SearchCount = 0 ;Number of searches
 Global $THaddtiles, $THside, $THi
 
+;Search speed control
 Global $speedBump = 0
+Global $hTimerClickNext, $fdiffReadGold
 
 ;Troop types
 Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell
