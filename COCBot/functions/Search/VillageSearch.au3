@@ -4,6 +4,8 @@ Func VillageSearch($TakeSS = 0) ;Control for searching a village that meets cond
 	Local $skippedVillages
 	Local $conditionlogstr
 	_WinAPI_EmptyWorkingSet(WinGetProcess($Title)) ; Reduce BlueStacks Memory Usage
+
+	$hTimerClickNext = TimerInit() ;Next button already pressed before call here
 	If _Sleep(1000) Then Return
 	_CaptureRegion() ; Check Break Shield button again
 	If _ColorCheck(_GetPixelColor(513, 416), Hex(0x5DAC10, 6), 50) Then
@@ -105,7 +107,6 @@ Func VillageSearch($TakeSS = 0) ;Control for searching a village that meets cond
 				_GDIPlus_ImageSaveToFile($hBitmap, @ScriptDir & "\AllTowns\" & $Date & " at " & $Time & ".png")
 			EndIf
 
-			If _Sleep($icmbSearchsp * 1500) Then ExitLoop (2)
 
 			; Attack instantly if Attack Now button pressed
 			GUICtrlSetState($btnAtkNow, $GUI_DISABLE)
@@ -121,7 +122,14 @@ Func VillageSearch($TakeSS = 0) ;Control for searching a village that meets cond
 				If $CommandStop = 0 Then Return
 				_CaptureRegion()
 				If _ColorCheck(_GetPixelColor(703, 520), Hex(0xD84400, 6), 20) Then
+					Local $fDiffNow = TimerDiff($hTimerClickNext) - $fdiffReadGold  ;How long in attack prep mode
+					if $fDiffNow < $speedBump + $icmbSearchsp * 1500 Then ; Wait accoridng to search speed + speedBump
+						if _Sleep($speedBump + $icmbSearchsp * 1500 - $fDiffNow) Then ExitLoop (2)
+					EndIf
 					Click(750, 500) ;Click Next
+					$hTimerClickNext = TimerInit()
+					;Take time to do search
+					If _Sleep(1000) Then ExitLoop (2)
 					;$skippedVillages += 1
 					GUICtrlSetData($lblresultvillagesskipped, GUICtrlRead($lblresultvillagesskipped) + 1)
 					GUICtrlSetData($lblresultsearchcost, GUICtrlRead($lblresultsearchcost) + $SearchCost)

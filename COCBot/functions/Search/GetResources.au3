@@ -7,13 +7,18 @@ Func GetResources() ;Reads resources
 		Local $i = 0
 		Local $x = 0
 		Local $txtDead = "Live"
-		While getGold(51, 66) = "" ; Loops until gold is readable
+
+		_CaptureRegion()
+		While _ColorCheck(_GetPixelColor(35,70), Hex(0xF8F8AC, 6), 20) = False or _
+			  _ColorCheck(_GetPixelColor(35,105), Hex(0xE052D6, 6), 20) = False or _
+			  getGold(51, 66) = "" ; Loops until gold is readable, add check for gold & elixir icon to prevent false reading
 			If _Sleep(500) Then ExitLoop (2)
+			_CaptureRegion()
 			$i += 1
 			If $i >= 20 Then ; If gold cannot be read by 10 seconds
 				If checkNextButton() And $x <= 20 Then ;Checks for Out of Sync or Connection Error during search
+					If $DebugMode = 1 Then SetLog("Click Next Button, GetResources")
 					Click(750, 500) ;Click Next
-					If _Sleep(1000) Then ExitLoop
 				$x += 1
 				Else
 					SetLog("Cannot locate Next button, Restarting Bot", $COLOR_RED)
@@ -31,6 +36,18 @@ Func GetResources() ;Reads resources
 							EndIf
 						EndIf
 					EndIf
+					If _ImageSearch(@ScriptDir & "\images\Lost.bmp", 1, $dummyX, $dummyY, 50) = 1 Then
+						If $dummyX > 320 and $dummyX < 350 and $dummyY > 330 and $dummyY < 350 Then
+							$speedBump += 500
+							If $speedBump > 5000 Then
+								$speedBump=5000
+								SetLog("Lost Connection! Already searching slowly, not changing anything.", $COLOR_RED)
+							Else
+								SetLog("Lost Connection! Slowing search speed by 0.5 secs.", $COLOR_RED)
+							EndIf
+						EndIf
+					EndIf
+
 					If $DebugMode = 1 Then
 						_GDIPlus_ImageSaveToFile($hBitmap, $dirDebug & "NoNextRes-" & @HOUR & @MIN & @SEC & ".png")
 					EndIf
@@ -45,8 +62,12 @@ Func GetResources() ;Reads resources
 				$i = 0
 			EndIf
 		WEnd
+		;Gold is readable, record time
+		$fdiffReadGold = TimerDiff($hTimerClickNext)
 		If _Sleep(300) Then ExitLoop (2)
-		If _Sleep($speedBump) Then ExitLoop(2)
+
+		;do speedbump sleep smarter way, moved to VillageSearch.au3 before click next button with condition test
+		;If _Sleep($speedBump) Then ExitLoop(2)
 
 		$searchDead = checkDeadBase()
 		$searchTH = checkTownhall()
