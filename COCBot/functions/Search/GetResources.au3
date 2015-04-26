@@ -12,7 +12,6 @@ Func GetResources() ;Reads resources
 		While _ColorCheck(_GetPixelColor(35,70), Hex(0xF8F8AC, 6), 20) = False or _
 			  _ColorCheck(_GetPixelColor(35,105), Hex(0xE052D6, 6), 20) = False or _
 			  getGold(51, 66) = "" ; Loops until gold is readable, add check for gold & elixir icon to prevent false reading
-			if $DebugMode = 1 then SetLog ( "Gold & Elixir icon point color: " & _GetPixelColor(35,70) &  "/" & _GetPixelColor(35,105))
 			If _Sleep(500) Then ExitLoop (2)
 			_CaptureRegion()
 			$i += 1
