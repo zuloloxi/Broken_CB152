@@ -35,7 +35,7 @@ Func GetResources() ;Reads resources
 							Else
 								SetLog("Out of sync! Slowing search speed by 0.5 secs.", $COLOR_RED)
 							EndIf
-\						EndIf
+						EndIf
 					EndIf
 					If _ImageSearch(@ScriptDir & "\images\Lost.bmp", 1, $dummyX, $dummyY, 50) = 1 Then
 						If $dummyX > 320 and $dummyX < 350 and $dummyY > 330 and $dummyY < 350 Then
