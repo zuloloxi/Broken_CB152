@@ -150,7 +150,7 @@ Func runBot() ;Bot that runs everything in order
 		EndIf
 		Pause()
 		If $CommandStop <> 0 And $CommandStop <> 3 Then
-			Train()
+			TrainTroop()
 			If _Sleep(1000) Then Return
 			TrainDark()
 			If _Sleep(1000) Then Return
@@ -259,7 +259,7 @@ Func Idle() ;Sequence that runs until Full Army
 		If $CommandStop <> 3 Then
 			CheckArmyCamp()
 			If _Sleep(1000) Then Return
-			Train()
+			TrainTroop()
 			If _Sleep(1000) Then Return
 			TrainDark()
 			If _Sleep(1000) Then Return
@@ -321,6 +321,14 @@ Func Attack() ;Selects which algorithm
 	SetLog("======Beginning Attack======")
 	algorithm_AllTroops()
 EndFunc   ;==>Attack
+
+Func TrainTroop()
+   If _GUICtrlComboBox_GetCurSel($cmbTroopComp) = 10 Then
+	  TrainCustom()
+   Else
+	  Train()
+   EndIf
+EndFunc
 
 Func Pause()
 	While $PauseBot

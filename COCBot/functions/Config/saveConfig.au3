@@ -292,6 +292,20 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWrite($config, "troop", "troop3", _GUICtrlComboBox_GetCurSel($cmbBarrack3))
 	IniWrite($config, "troop", "troop4", _GUICtrlComboBox_GetCurSel($cmbBarrack4))
 
+	;Custom Troop 2 Settings--------------------------------------------------------------------------
+	IniWrite($config, "troop", "CustomRax1", GUICtrlRead($txtFirstTroop1))
+	IniWrite($config, "troop", "CustomRax2", GUICtrlRead($txtFirstTroop2))
+	IniWrite($config, "troop", "CustomRax3", GUICtrlRead($txtFirstTroop3))
+	IniWrite($config, "troop", "CustomRax4", GUICtrlRead($txtFirstTroop4))
+	IniWrite($config, "troop", "CustomtroopF1", _GUICtrlComboBox_GetCurSel($cmbFirstTroop1))
+	IniWrite($config, "troop", "CustomtroopF2", _GUICtrlComboBox_GetCurSel($cmbFirstTroop2))
+	IniWrite($config, "troop", "CustomtroopF3", _GUICtrlComboBox_GetCurSel($cmbFirstTroop3))
+	IniWrite($config, "troop", "CustomtroopF4", _GUICtrlComboBox_GetCurSel($cmbFirstTroop4))
+	IniWrite($config, "troop", "CustomtroopS1", _GUICtrlComboBox_GetCurSel($cmbSecondTroop1))
+	IniWrite($config, "troop", "CustomtroopS2", _GUICtrlComboBox_GetCurSel($cmbSecondTroop2))
+	IniWrite($config, "troop", "CustomtroopS3", _GUICtrlComboBox_GetCurSel($cmbSecondTroop3))
+	IniWrite($config, "troop", "CustomtroopS4", _GUICtrlComboBox_GetCurSel($cmbSecondTroop4))
+
 	;Other Settings--------------------------------------------------------------------------
 	If GUICtrlRead($chkWalls) = $GUI_CHECKED Then
 		IniWrite($config, "other", "auto-wall", 1)

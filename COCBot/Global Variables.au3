@@ -254,6 +254,11 @@ Global $ArmyComp
 Global $TownHallPos[2] = [-1, -1] ;Position of TownHall
 Global $barrackPos[4][2] ;Positions of each barracks
 Global $barrackTroop[10] ;Barrack troop set
+
+Global $CustomTroopF[4]
+Global $CustomTroopS[4]
+Global $itxtFirstTroop[4]
+
 Global $ArmyPos[2]
 Global $SpellPos[2]
 Global $KingPos[2]
@@ -364,6 +369,7 @@ Global $FirstStart = True
 Global $DCattack = 0
 Global $Checkrearm = True
 Global $FirstDarkTrain = True
+Global $FirstTrain = True
 
 ;PushBullet
 Global $PushBulletEnabled = 0
