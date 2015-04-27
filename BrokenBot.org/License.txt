@@ -6,3 +6,4 @@ ANY and ALL code included (recursively) in this sub-directory of the project is 
 - **NOT FOR COMMERCIAL USE** by any project which includes any part of the code in this sub-directory without express written consent of BrokenBot.org
 - You **MAY NOT SOLICIT DONATIONS** from any project which includes any part of the code in this sub-directory without express written consent of BrokenBot.org
 
+- This license may not be modified by anyone other than BrokenBot.org
