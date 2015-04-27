@@ -1,7 +1,11 @@
-$frmBot = GUICreate($sBotTitle, 417, 430, 207, 158)
-GUISetIcon(@ScriptDir & "\Icons\cocbot.ico")
-TraySetIcon(@ScriptDir & "\Icons\cocbot.ico")
-$txtLog = _GUICtrlRichEdit_Create($frmBot, "", 16, 81, 385, 164, BitOR($ES_MULTILINE, $ES_READONLY, $WS_VSCROLL, $WS_HSCROLL, 8912))
+$frmBot = GUICreate($sBotTitle, 417, 545, 207, 158)
+;BrokenBot.org
+GUISetIcon(@ScriptDir & "BrokenBot.org\images\icons\brokenbot.ico")
+TraySetIcon(@ScriptDir & "BrokenBot.org\images\icons\brokenbot.ico")
+$imgLogo = GUICtrlCreatePic("BrokenBot.org\images\misc\brokenbot_logo.jpg", 8, 405, 401, 112)
+GUICtrlSetCursor ($imgLogo, 0)
+;end BrokenBot.org
+$txtLog = _GUICtrlRichEdit_Create($frmBot, "", 16, 45, 385, 200, BitOR($ES_MULTILINE, $ES_READONLY, $WS_VSCROLL, $WS_HSCROLL, 8912))
 $tabMain = GUICtrlCreateTab(8, 0, 403, 403, $TCS_MULTILINE)
 GUICtrlSetOnEvent(-1, "tabMain")
 
@@ -30,8 +34,6 @@ GUICtrlSetData(-1, "Halt Attack Mode|Shutdown PC|Sleep PC", "Halt Attack Mode")
 $lblPC = GUICtrlCreateLabel("IF :", 178, 264, 25, 17)
 $cmbBotCond = GUICtrlCreateCombo("", 198, 260, 163, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 GUICtrlSetData(-1, "G and E Full and Max.Trophy|(G and E) Full or Max.Trophy|(G or E) Full and Max.Trophy|G or E Full or Max.Trophy|Gold and Elixir Full|Gold or Elixir Full|Gold Full and Max.Trophy|Elixir Full and Max.Trophy|Gold Full or Max.Trophy|Elixir Full or Max.Trophy|Gold Full|Elixir Full|Reach Max. Trophy", "Gold and Elixir Full")
-$imgLogo = GUICtrlCreatePic(".\images\broken_logo.jpg", 16, 42, 383, 37)
-GUICtrlSetCursor ($imgLogo, 0)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 $otherSettings = GUICtrlCreateGroup("Other Settings", 15, 290, 385, 66)

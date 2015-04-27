@@ -1,13 +1,13 @@
 #RequireAdmin
 #AutoIt3Wrapper_UseX64=n
-#pragma compile(Icon, "Icons\cocbot.ico")
-#pragma compile(FileDescription, Clash of Clans Bot - Modification of A Free/Open Sourced Clash of Clans bot - https://clashbot.org)
-#pragma compile(ProductName, Clash of Clans Bot)
-#pragma compile(ProductVersion, 1.5)
-#pragma compile(FileVersion, 1.5)
+#pragma compile(Icon, "BrokenBot.org\images\icons\brokenbot.ico")
+#pragma compile(FileDescription, BrokenBot.org - Clash of Clans Bot)
+#pragma compile(ProductName, BrokenBot.org - Clash of Clans Bot)
+#pragma compile(ProductVersion, 1.5.1)
+#pragma compile(FileVersion, 1.5.1)
 
-$sBotVersion = "1.5"
-$sBotTitle = "AutoIt Unbroken ClashBot v" & $sBotVersion
+$sBotVersion = "1.5.1"
+$sBotTitle = "BrokenBot.org - Break FREE - v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then
 	MsgBox(0, "", "Bot is already running.")
