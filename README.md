@@ -1,4 +1,4 @@
-# BrokenBor.org - Clash of Clans Bot
+# BrokenBot.org - Clash of Clans Bot
 
 ## Community
 Forums available for discussion at: http://brokenbot.org/
