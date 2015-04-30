@@ -121,7 +121,8 @@ Func Train()
 		Click($barrackPos[$i][0], $barrackPos[$i][1]) ;Click Barrack
 		If _Sleep(1000) Then ExitLoop
 
-		Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x603818, 6), 5) ;Finds Train Troops button
+		;Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x603818, 6), 5) ;Finds Train Troops button
+		Local $TrainPos = _PixelSearch(155, 603, 694, 605, Hex(0x9C7C37, 6), 5) ;Finds Train Troops button
 		If IsArray($TrainPos) = False Then
             SetLog("Barrack " & $i + 1 & " is not available", $COLOR_RED)
             handleBarracksError($i)
