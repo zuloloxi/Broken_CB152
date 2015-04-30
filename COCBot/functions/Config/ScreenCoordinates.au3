@@ -67,6 +67,7 @@ Func IdentifyTroopKind($position)
     	If _ColorCheck($TroopPixel, Hex(0x603B30, 6), 5) Then Return $eHog ;Check if slot is Hogs
     	If _ColorCheck($TroopPixel, Hex(0xB9645F, 6), 5) Then Return $eValkyrie ;Check if slot is Valkyries
 	If _ColorCheck($TroopPixel, Hex(0xF8EB79, 6), 5) Then Return $eKing ;Check if slot is King
+	   If _ColorCheck($TroopPixel, Hex(0xF8F3D0, 6), 5) Then Return $eWizard ;Check if slot is Wizard
 	;$OtherPixel = _GetPixelColor(68 + (72 * $position), 588)
 
 	If _ColorCheck(_GetPixelColor(68 + (72 * $position), 588), Hex(0x7031F0, 6), 5) Then Return $eQueen ;Check if slot is Queen
