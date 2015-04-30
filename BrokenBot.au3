@@ -3,10 +3,10 @@
 #pragma compile(Icon, "BrokenBot.org\images\icons\brokenbot.ico")
 #pragma compile(FileDescription, BrokenBot.org - Clash of Clans Bot)
 #pragma compile(ProductName, BrokenBot.org - Clash of Clans Bot)
-#pragma compile(ProductVersion, 1.5.1)
-#pragma compile(FileVersion, 1.5.1)
+#pragma compile(ProductVersion, 1.5.2)
+#pragma compile(FileVersion, 1.5.2)
 
-$sBotVersion = "1.5.1"
+$sBotVersion = "1.5.2"
 $sBotTitle = "BrokenBot.org - Break FREE - v" & $sBotVersion
 
 If _Singleton($sBotTitle, 1) = 0 Then

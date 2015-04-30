@@ -1,18 +1,24 @@
 Func getDigitTH(ByRef $x, $y)
 
-	Local $c1 = Hex(0x383838, 6), $c2 = Hex(0x171615, 6), $c3 = Hex(0xFFFFFF, 6)
+	;Local $c1 = Hex(0x383838, 6), $c2 = Hex(0x171615, 6), $c3 = Hex(0xFFFFFF, 6)
+	;Hot fix for TH10
+	Local $c1 = Hex(0xFDFDFD, 6), $c2 = Hex(0x030303, 6), $c3 = Hex(0x2C2A29, 6)
 	Local $pixel1[3] = [$x + 1, $y + 1, $c1], $pixel2[3] = [$x + 1, $y + 16, $c2], $pixel3[3] = [$x + 20, $y + 9, $c3]
 	If boolPixelSearch($pixel1, $pixel2, $pixel3) Then
 		Return 10
 	EndIf
 
-	Local $c1 = Hex(0x060606, 6), $c2 = Hex(0x979797, 6), $c3 = Hex(0x979797, 6)
+	;Local $c1 = Hex(0x060606, 6), $c2 = Hex(0x979797, 6), $c3 = Hex(0x979797, 6)
+	;Hot fix for TH9
+	Local $c1 = Hex(0x010101, 6), $c2 = Hex(0x3E3E3E, 6), $c3 = Hex(0xB7B7B7, 6)
 	Local $pixel1[3] = [$x + 6, $y + 5, $c1], $pixel2[3] = [$x + 4, $y + 10, $c2], $pixel3[3] = [$x + 8, $y + 15, $c3]
 	If boolPixelSearch($pixel1, $pixel2, $pixel3) Then
 		Return 9
 	EndIf
 
-	Local $c1 = Hex(0x070707, 6), $c2 = Hex(0x707070, 6), $c3 = Hex(0x505050, 6)
+	;Local $c1 = Hex(0x070707, 6), $c2 = Hex(0x707070, 6), $c3 = Hex(0x505050, 6)
+	;Hot fix for TH8
+	Local $c1 = Hex(0x020202, 6), $c2 = Hex(0x1E1E1E, 6), $c3 = Hex(0x6B6B6B, 6)
 	Local $pixel1[3] = [$x + 6, $y + 4, $c1], $pixel2[3] = [$x + 6, $y + 10, $c2], $pixel3[3] = [$x + 2, $y + 8, $c3]
 	If boolPixelSearch($pixel1, $pixel2, $pixel3) Then
 		Return 8

@@ -15,6 +15,7 @@ Func checkTownhall()
 				EndIf
 				If $THLocation = 1 Then
 					If $DebugMode = 1 Then
+						SetLog("Matching Image: townhall" & String($i) & ".bmp, Tolerance:" & String($bumpTolerance), $COLOR_BLUE)
 						$hClone = _GDIPlus_BitmapCloneArea($hBitmap, $THx - 30, $THy - 30, 60, 60, _GDIPlus_ImageGetPixelFormat($hBitmap))
 						$j = 1
 						Do
