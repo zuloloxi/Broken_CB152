@@ -87,7 +87,7 @@ Func VillageReport()
 			If $PushBulletEnabled = 1 Then ;do pushbullet reports
 				If $PushBullettype = 1 Then ;As JPG
 					If _Sleep(2000) Then Return
-					_PushFile($FileName, "loots", "image/jpeg", "Last Raid", $FileName)
+					_PushFile($FileName, "loots", "image/jpeg", "Last Raid (" & _NumberFormat($SearchCount) & " Searches = " & _NumberFormat($SearchCount * $SearchCost) & " Gold)", $FileName)
 				EndIf
 				if $PushBulletlastraid = 1 then ;As Txt
 					_Push("Last Raid Report:", "Gain: \n[G]: " & _NumberFormat($GoldCount-$GoldCountold) & " [E]: " & _NumberFormat($ElixirCount-$ElixirCountOld) & _
