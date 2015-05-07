@@ -96,7 +96,7 @@ Global $speedBump = 0
 Global $hTimerClickNext, $fdiffReadGold
 
 ;Troop types
-Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell
+Global Enum $eBarbarian, $eArcher, $eGiant, $eGoblin, $eWallbreaker, $eMinion, $eWizard, $eHog, $eValkyrie, $eKing, $eQueen, $eCastle, $eLSpell
 
 ;Attack Settings
 ; Shift outer corners 1 pixel for more random drop space
@@ -250,6 +250,7 @@ Global $CurArch
 Global $CurGiant
 Global $CurGoblin
 Global $CurWB
+Global $CurWiz
 Global $ArmyComp
 Global $TownHallPos[2] = [-1, -1] ;Position of TownHall
 Global $barrackPos[4][2] ;Positions of each barracks

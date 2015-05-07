@@ -555,7 +555,12 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 		EndIf
 		If LaunchTroop($eArcher, $nbSides, 1, 2, 0, ($OuterQuad And $attackTH = 2)) Then
 			If _Sleep(SetSleep(1)) Then Return
-		EndIf
+			EndIf
+
+			If LaunchTroop($eWizard, $nbSides, 1, 1, 1, ($OuterQuad And $attackTH = 2)) Then
+			   If _Sleep(SetSleep(1)) Then Return
+			EndIf
+
 		If LaunchTroop($eBarbarian, (($mixedMode) ? 1 : $nbSides), 2, 2, 0, ($OuterQuad And $attackTH >= 1)) Then
 			If _Sleep(SetSleep(1)) Then Return
 		EndIf
